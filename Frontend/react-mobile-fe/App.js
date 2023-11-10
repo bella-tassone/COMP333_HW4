@@ -8,7 +8,7 @@
 import React, { useEffect, useState } from "react";
 // FlatList renders items lazily, when they are about to appear, and removes
 // items that scroll way off screen to save memory and processing time.
-import { FlatList, Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import axios from 'axios';
 
 export default function App() {
@@ -31,7 +31,11 @@ export default function App() {
         setLoading(false);
     })
     .catch(err => console.log(err));
-}, []);
+  }, []);
+
+  const handlePress = () => {
+    Alert.alert("TouchableOpacity pressed");
+  };
 
   return (
     // Now the component parses the data and renders it using a FlatList component.
@@ -48,8 +52,8 @@ export default function App() {
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ fontSize: 18, color: "green", textAlign: "center" }}>
-            Song List
+          <Text style={{ fontSize: 18, color: "grey", textAlign: "center" }}>
+            Home
           </Text>
           <Text
             style={{
@@ -68,8 +72,8 @@ export default function App() {
             // renderItem takes an item from the data and renders it on a list.
             data={ratings}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.button} onPress="">
-                <Text>{item.song + " by " + item.artist}</Text>
+              <TouchableOpacity style={styles.button} onPress={handlePress}>
+                <Text style={styles.buttonText}>{item.song + " by " + item.artist}</Text>
               </TouchableOpacity>
             )}
           />
@@ -94,6 +98,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
+    marginVertical:5
   },
   buttonText: {
     color: "#fff",
