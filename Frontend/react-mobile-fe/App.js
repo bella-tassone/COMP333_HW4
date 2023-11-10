@@ -77,6 +77,9 @@ export default function App() {
               </TouchableOpacity>
             )}
           />
+        <TouchableOpacity style={styles.button} onPress={handlePress}>
+                <Text style={styles.buttonText}>Add Song</Text>
+              </TouchableOpacity>
         </View>
       )}
     </View>
