@@ -8,7 +8,7 @@
 import React, { useEffect, useState } from "react";
 // FlatList renders items lazily, when they are about to appear, and removes
 // items that scroll way off screen to save memory and processing time.
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import axios from 'axios';
 
 export default function App() {
@@ -68,11 +68,35 @@ export default function App() {
             // renderItem takes an item from the data and renders it on a list.
             data={ratings}
             renderItem={({ item }) => (
-              <Text>{item.id + ". " + item.song}</Text>
+              <TouchableOpacity style={styles.button} onPress="">
+                <Text>{item.song + " by " + item.artist}</Text>
+              </TouchableOpacity>
             )}
           />
         </View>
       )}
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 16,
+  },
+  button: {
+    backgroundColor: "#4a90e2",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+});
