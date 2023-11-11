@@ -8,17 +8,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function Login({navigation}) {
 
-  const [username, onChangeUsername] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
-    .then((response) => {
-        setRating(response.data);
-        setLoading(false);
-    })
-    .catch(err => console.log(err));
-  }, []);
+  // when submit button is clicked
+  const handleSubmit = async () => {
+
+    try {
+      // Assuming your API expects query parameters for a GET request
+      const response = await axios.get('http://129.133.188.164/index.php/user/login', {
+        params: {username: username, password: password}
+      });
+      if (response.status === 200) {
+        Alert.alert('Login successful!');
+        //localStorage.setItem('username', inputs.username);
+        navigation.navigate("Home");
+
+      } else {
+        Alert.alert('Login failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('API call error:', error);
+
+      if (error.response && error.response.data && error.response.data.error) {
+        Alert.alert(error.response.data.error);
+      } else {
+        Alert.alert('An error occurred');
+      }
+    }
+  };
 
   return (
     <View
@@ -35,20 +53,20 @@ export default function Login({navigation}) {
       <View style={{alignItems:'center'}}>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeUsername}
+          onChangeText={(text) => setUsername(text)}
           value={username}
           placeholder="Username"
         />
         <TextInput
           style={styles.input}
-          onChangeText={onChangePassword}
+          onChangeText={(text) => setPassword(text)}
           value={password}
           placeholder="Password"
           secureTextEntry={true}
         />
       </View>
       <View style={{alignItems:'center'}}>
-        <Pressable style={styles.button} onPress={() => Alert.alert("heyyy")}>
+        <Pressable style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
         </Pressable>
       </View>
