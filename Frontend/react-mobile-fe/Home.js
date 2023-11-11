@@ -54,9 +54,9 @@ export default function Home({navigation}) {
             // prop on the FlatList component.
             // renderItem takes an item from the data and renders it on a list.
             data={ratings}
-            keyExtractor={(item, index) => {return item.id;}}
             renderItem={({ item }) => (
               <TouchableOpacity 
+                    key={item.id}
                     style={styles.button} 
                     onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating})}
                 >
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   button: {
-    backgroundColor: "#4a90e2",
+    backgroundColor: "grey",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
