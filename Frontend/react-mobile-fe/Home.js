@@ -8,7 +8,7 @@ export default function Home({navigation}) {
   const [ratings, setRatings] = useState([]);
   
   useEffect(() => {
-    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
+    axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
     .then((response) => {
         setRatings(response.data);
         setLoading(false);
@@ -54,6 +54,7 @@ export default function Home({navigation}) {
             // prop on the FlatList component.
             // renderItem takes an item from the data and renders it on a list.
             data={ratings}
+            keyExtractor={(item, index) => {return item.id;}}
             renderItem={({ item }) => (
               <TouchableOpacity 
                     style={styles.button} 
