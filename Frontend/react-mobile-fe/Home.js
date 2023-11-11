@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable } from "react-native";
 import axios from 'axios';
 
 export default function Home({navigation}) {
@@ -16,10 +16,6 @@ export default function Home({navigation}) {
     .catch(err => console.log(err));
   }, []);
 
-  const handlePress = () => {
-    navigation.navigate("Details", {id: item.id});
-  };
-
   return (
     // Now the component parses the data and renders it using a FlatList component.
     <View style={{ flex: 1, padding: 24 }}>
@@ -35,7 +31,7 @@ export default function Home({navigation}) {
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ fontSize: 18, color: "grey", textAlign: "center" }}>
+          <Text style={{ fontSize: 30, color: "grey", textAlign: "center" }}>
             Ratings List
           </Text>
           <Text
@@ -64,9 +60,11 @@ export default function Home({navigation}) {
               </TouchableOpacity>
             )}
           />
-        <TouchableOpacity style={styles.button} onPress={handlePress}>
-                <Text style={styles.buttonText}>Add Song</Text>
-              </TouchableOpacity>
+          <View style={{alignItems:'center'}}>
+            <Pressable style={styles.addRatingButton} onPress={() => Alert.alert("Simple Button pressed")}>
+              <Text style={styles.buttonText}>Add Song</Text>
+            </Pressable>
+          </View>
         </View>
       )}
     </View>
@@ -94,4 +92,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
+  addRatingButton: {
+    backgroundColor: "lightblue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginVertical:5
+  }
 });

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 // FlatList renders items lazily, when they are about to appear, and removes
 // items that scroll way off screen to save memory and processing time.
-import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { Text, View, Pressable, StyleSheet, Alert } from "react-native";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
@@ -71,6 +71,14 @@ export default function ViewDetails({navigation, route}) {
         </Text>
         {stars(route.params.rating)}
       </View>
+      <View style={{alignItems:'center', marginTop:30}}>
+        <Pressable style={styles.button} onPress={() => Alert.alert("Simple Button pressed")}>
+          <Text style={styles.text}>Update</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={() => Alert.alert("Simple Button pressed")}>
+          <Text style={styles.text}>Delete</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -82,5 +90,22 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "grey",
     textAlign: "center"
-  }
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'grey',
+    marginVertical:7,
+  },
+  text: {
+    fontSize: 20,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
+  },
 });
