@@ -6,6 +6,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./Home";
 import ViewDetails from "./ViewDetails";
+import Login from "./Login";
+import Registration from "./Registration";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar as farFaStar} from '@fortawesome/free-regular-svg-icons';
@@ -23,6 +25,8 @@ function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Details" component={ViewDetails} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Registration" component={Registration} />
       </Stack.Navigator>
     </NavigationContainer>
   );
