@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable } from "react-native";
 import axios from 'axios';
 
 export default function Home({navigation}) {
@@ -8,17 +8,13 @@ export default function Home({navigation}) {
   const [ratings, setRatings] = useState([]);
   
   useEffect(() => {
-    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
+    axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
     .then((response) => {
         setRatings(response.data);
         setLoading(false);
     })
     .catch(err => console.log(err));
   }, []);
-
-  const handlePress = () => {
-    navigation.navigate("Details", {id: item.id});
-  };
 
   return (
     // Now the component parses the data and renders it using a FlatList component.
@@ -35,7 +31,7 @@ export default function Home({navigation}) {
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ fontSize: 18, color: "grey", textAlign: "center" }}>
+          <Text style={{ fontSize: 30, color: "grey", textAlign: "center" }}>
             Ratings List
           </Text>
           <Text
@@ -56,6 +52,7 @@ export default function Home({navigation}) {
             data={ratings}
             renderItem={({ item }) => (
               <TouchableOpacity 
+                    key={item.id}
                     style={styles.button} 
                     onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating})}
                 >
@@ -63,9 +60,11 @@ export default function Home({navigation}) {
               </TouchableOpacity>
             )}
           />
-        <TouchableOpacity style={styles.button} onPress={handlePress}>
-                <Text style={styles.buttonText}>Add Song</Text>
-              </TouchableOpacity>
+          <View style={{alignItems:'center'}}>
+            <Pressable style={styles.addRatingButton} onPress={() => Alert.alert("Simple Button pressed")}>
+              <Text style={styles.buttonText}>Add Song</Text>
+            </Pressable>
+          </View>
         </View>
       )}
     </View>
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   button: {
-    backgroundColor: "#4a90e2",
+    backgroundColor: "grey",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -93,4 +92,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
+  addRatingButton: {
+    backgroundColor: "lightblue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginVertical:5
+  }
 });
