@@ -18,7 +18,7 @@ export default function Home({navigation}) {
 
   return (
     // Now the component parses the data and renders it using a FlatList component.
-    <View style={{ flex: 1, padding: 24 }}>
+    <View style={{ flex: 1, padding: 12 }}>
       {/* As long as isLoading is true, show "Loading ..." */}
       {isLoading ? (
         <Text>Loading...</Text>
@@ -28,20 +28,16 @@ export default function Home({navigation}) {
           style={{
             flex: 1,
             flexDirection: "column",
-            justifyContent: "space-between",
+            justifyContent: "space-between"
           }}
         >
-          <Text style={{ fontSize: 30, color: "grey", textAlign: "center" }}>
+          <View style={{alignItems:'flex-end'}}>
+            <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Login")}>
+              <Text style={styles.buttonText}>Login</Text>
+            </Pressable>
+          </View>
+          <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop:10}}>
             Ratings List
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              color: "green",
-              textAlign: "center",
-              paddingBottom: 10,
-            }}
-          >
           </Text>
           <FlatList
             // We use various props of the built-in FlatList component.
@@ -49,6 +45,7 @@ export default function Home({navigation}) {
             // The key from the data array is extracted using the keyExtractor
             // prop on the FlatList component.
             // renderItem takes an item from the data and renders it on a list.
+            style={{padding:12}}
             data={ratings}
             renderItem={({ item }) => (
               <TouchableOpacity 
@@ -60,7 +57,7 @@ export default function Home({navigation}) {
               </TouchableOpacity>
             )}
           />
-          <View style={{alignItems:'center'}}>
+          <View style={{alignItems:'center', marginTop:10}}>
             <Pressable style={styles.addRatingButton} onPress={() => Alert.alert("Simple Button pressed")}>
               <Text style={styles.buttonText}>Add Song</Text>
             </Pressable>
@@ -93,10 +90,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   addRatingButton: {
-    backgroundColor: "lightblue",
+    backgroundColor: "steelblue",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
     marginVertical:5
+  },
+  loginButton: {
+    backgroundColor: "steelblue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginVertical:2
   }
 });
