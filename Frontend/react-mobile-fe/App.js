@@ -15,8 +15,6 @@ import { faStar as fasFaStar} from '@fortawesome/free-solid-svg-icons';
 
 library.add(farFaStar, fasFaStar);
 
-
-
 const Stack = createStackNavigator();
 
 function App() {

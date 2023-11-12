@@ -52,7 +52,10 @@ export default function Home({navigation}) {
                     style={styles.button} 
                     onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating})}
                 >
-                <Text style={styles.buttonText}>{item.song + " by " + item.artist}</Text>
+                <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
+                  <Text style={styles.songText}>{item.song}</Text>
+                  <Text style={styles.artistText}>{"  by " + item.artist}</Text>
+                </View>
               </TouchableOpacity>
             )}
           />
@@ -84,9 +87,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical:5
   },
-  buttonText: {
+  songText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight:'bold'
+  },
+  artistText: {
+    color: "#fff",
+    fontSize: 20,
+    opacity: 0.5
   },
   addRatingButton: {
     backgroundColor: "steelblue",
