@@ -28,8 +28,7 @@ export default function Login({navigation}) {
         Alert.alert('Login failed. Please try again.');
       }
     } catch (error) {
-      console.error('API call error:', error);
-
+      //console.error('API call error:', error);
       if (error.response && error.response.data && error.response.data.error) {
         Alert.alert(error.response.data.error);
       } else {

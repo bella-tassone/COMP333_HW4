@@ -8,19 +8,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function Registration({navigation}) {
 
-  const [username, onChangeUsername] = React.useState('');
-  const [password1, onChangePassword1] = React.useState('');
-  const [password2, onChangePassword2] = React.useState('');
+    const [username, setUsername] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
 
+    // when submit button is clicked
+    const handleSubmit = async () => {
 
-  useEffect(() => {
-    axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
-    .then((response) => {
-        setRating(response.data);
-        setLoading(false);
-    })
-    .catch(err => console.log(err));
-  }, []);
+        try {
+            const response = await axios.post('http://129.133.188.164/index.php/user/create', 
+            {username:username, password1:password1, password2:password2});
+            
+            if (response.status === 200) {
+            Alert.alert('Registration successful!');
+            //localStorage.setItem('username', inputs.username);
+            navigation.navigate("Home");
+            }
+        } catch (error) {
+            //console.error('API call error:', error);
+            if (error.response && error.response.data && error.response.data.error) {
+            Alert.alert(error.response.data.error); 
+            } else {
+            Alert.alert('An error occurred');
+            }
+        }
+    };
 
   return (
     <View
@@ -37,27 +49,27 @@ export default function Registration({navigation}) {
       <View style={{alignItems:'center'}}>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeUsername}
+          onChangeText={(text) => setUsername(text)}
           value={username}
           placeholder="Username"
         />
         <TextInput
           style={styles.input}
-          onChangeText={onChangePassword1}
+          onChangeText={(text) => setPassword1(text)}
           value={password1}
           placeholder="Password"
           secureTextEntry={true}
         />
         <TextInput
           style={styles.input}
-          onChangeText={onChangePassword2}
+          onChangeText={(text) => setPassword2(text)}
           value={password2}
           placeholder="Re-enter Password"
           secureTextEntry={true}
         />
       </View>
       <View style={{alignItems:'center'}}>
-        <Pressable style={styles.button} onPress={() => Alert.alert("heyyy")}>
+        <Pressable style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
         </Pressable>
       </View>
