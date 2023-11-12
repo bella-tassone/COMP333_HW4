@@ -17,7 +17,6 @@ export default function Home({navigation}) {
   }, []);
 
   return (
-    // Now the component parses the data and renders it using a FlatList component.
     <View style={{ flex: 1, padding: 12 }}>
       {/* As long as isLoading is true, show "Loading ..." */}
       {isLoading ? (
@@ -45,7 +44,7 @@ export default function Home({navigation}) {
             // The key from the data array is extracted using the keyExtractor
             // prop on the FlatList component.
             // renderItem takes an item from the data and renders it on a list.
-            style={{padding:12}}
+            style={{margin:12}}
             data={ratings}
             renderItem={({ item }) => (
               <TouchableOpacity 

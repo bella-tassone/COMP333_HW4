@@ -47,7 +47,7 @@ class UserController extends BaseController
                 $postData = json_decode(file_get_contents('php://input'), true);
 
                 if (!(array_key_exists('username', $postData) && array_key_exists('password1', $postData) && array_key_exists('password2', $postData))) {
-                    $strErrorDesc = "Error: empty data";
+                    $strErrorDesc = "Error: All fields must be filled!";
                     $strErrorHeader = 'HTTP/1.1 400 Bad Request';
                     } 
                 
@@ -58,7 +58,7 @@ class UserController extends BaseController
 
 
                     if ($username == "" || $password1 == "" || $password2 == "") {
-                        $strErrorDesc = "Error: empty data";
+                        $strErrorDesc = "Error: All fields must be filled!";
                         $strErrorHeader = 'HTTP/1.1 400 Bad Request';
                     } elseif (strlen($password1) < 10) {
                         $strErrorDesc = "Password is less than 10 characters";
@@ -112,7 +112,7 @@ class UserController extends BaseController
                 $password = $_GET['password'];
 
                 if ($username == "" || $password == "") {
-                    $strErrorDesc = "Not all fields filled out";
+                    $strErrorDesc = "Error: All fields must be filled!";
                     $strErrorHeader = 'HTTP/1.1 400 Bad Request';
                 }
                 else {
