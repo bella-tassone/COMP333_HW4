@@ -6,6 +6,7 @@ export default function UserDetails({navigation, route}) {
 
   const [isLoading, setLoading] = useState(true);
   const [ratings, setRatings] = useState([]);
+
   
   useEffect(() => {
     axios.get(`http://129.133.188.164/index.php/rating/getUserRatings?user=${route.params.user}`)

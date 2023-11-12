@@ -1,15 +1,17 @@
 
 import React, { useState } from "react";
 import { Text, View, Pressable, StyleSheet, Alert, TextInput } from "react-native";
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function LogOut({navigation}) {
+export default function LogOut({navigation, route}) {
+
+  const onChange = route.params.onChange;
 
   // when submit button is clicked
   const handleLogOut = async () => {
     try {
-      await AsyncStorage.removeItem('username');
+      await AsyncStorage.setItem('username', 'user');
+      onChange();
       navigation.navigate("Home");
     } catch (error) {
       console.error('API call error:', error);

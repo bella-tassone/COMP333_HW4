@@ -4,10 +4,11 @@ import { Text, View, Pressable, StyleSheet, Alert, TextInput } from "react-nativ
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Login({navigation}) {
+export default function Login({navigation, route}) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const onChange = route.params.onChange;
 
   // when submit button is clicked
   const handleSubmit = async () => {
@@ -21,6 +22,7 @@ export default function Login({navigation}) {
         await AsyncStorage.setItem('username', username);
         setUsername('');
         setPassword('');
+        onChange();
         Alert.alert('Login successful!');
         navigation.navigate("Home");
 

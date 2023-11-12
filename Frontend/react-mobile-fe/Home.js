@@ -8,7 +8,12 @@ export default function Home({navigation}) {
   const [isLoading, setLoading] = useState(true);
   const [ratings, setRatings] = useState([]);
   const [search, setSearch] = useState("");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
+  const [userChange, setUserChange] = useState(false);
+
+  const refreshUser = () => {
+    setUserChange(!userChange);
+  }
 
   useEffect(() => {
     AsyncStorage.getItem('username')
@@ -27,7 +32,7 @@ export default function Home({navigation}) {
         setLoading(false);
     })
     .catch(err => console.log(err));
-  }, []);
+  }, [userChange]);
 
   const clearAndSubmit = () => {
     setSearch("");
@@ -48,17 +53,17 @@ export default function Home({navigation}) {
             justifyContent: "space-evenly"
           }}
         >
-            {(user) ? (
+            {(user!='user') ? (
               <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop:0}}>{"Welcome, " + user + "!"}</Text>
-                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out")}>
+                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out", {onChange: refreshUser})}>
                   <Text style={styles.buttonText}>Log Out</Text>
                 </Pressable>
               </View>
             ) : (
               <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop:0}}>Welcome!</Text>
-                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Login")}>
+                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Login", {onChange: refreshUser})}>
                   <Text style={styles.buttonText}>Login</Text>
                 </Pressable>
               </View>
