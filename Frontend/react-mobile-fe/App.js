@@ -10,6 +10,7 @@ import Login from "./Login";
 import Registration from "./Registration";
 import UserDetails from "./UserDetails";
 import SearchResults from "./SearchResults";
+import LogOut from "./LogOut";
 
 
 
@@ -24,13 +25,14 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Details" component={ViewDetails} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Registration" component={Registration} />
-        <Stack.Screen name="User Details" component={UserDetails} />
-        <Stack.Screen name="Search Results" component={SearchResults} />
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} options={{headerShown: false}}  />
+        <Stack.Screen name="Details" component={ViewDetails} options={{headerShown: false}} />
+        <Stack.Screen name="Login" component={Login} options={{headerShown: false}}  />
+        <Stack.Screen name="Log Out" component={LogOut} options={{headerShown: false}}  />
+        <Stack.Screen name="Registration" component={Registration} options={{headerShown: false}}  />
+        <Stack.Screen name="User Details" component={UserDetails} options={{headerShown: false}}  />
+        <Stack.Screen name="Search Results" component={SearchResults} options={{headerShown: false}}  />
       </Stack.Navigator>
     </NavigationContainer>
   );

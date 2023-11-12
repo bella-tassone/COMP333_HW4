@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import { Text, View, Pressable, StyleSheet, Alert, TextInput } from "react-native";
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Login({navigation}) {
+export default function Login({navigation, route}) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const onChange = route.params.onChange;
 
   // when submit button is clicked
   const handleSubmit = async () => {
@@ -17,8 +19,11 @@ export default function Login({navigation}) {
         params: {username: username, password: password}
       });
       if (response.status === 200) {
+        await AsyncStorage.setItem('username', username);
+        setUsername('');
+        setPassword('');
+        onChange();
         Alert.alert('Login successful!');
-        //localStorage.setItem('username', inputs.username);
         navigation.navigate("Home");
 
       } else {
@@ -35,7 +40,7 @@ export default function Login({navigation}) {
   };
 
   return (
-    <View style={{ flex: 1, padding: 12 }}>
+    <View style={{ flex: 1, padding: 12, marginTop:40  }}>
       <View style={{alignItems:'flex-end'}}>
         <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
           <Text style={styles.buttonText}>Home</Text>
@@ -73,7 +78,7 @@ export default function Login({navigation}) {
           </Pressable>
         </View>
         <View style={{alignItems:'center', marginTop:10}}>
-          <Pressable onPress={() => navigation.navigate("Registration")}>
+          <Pressable onPress={() => navigation.navigate("Registration", {onChange: onChange})}>
             <Text style={{textDecorationLine:'underline', color:'blue'}}>Don't have an account? Register here!</Text>
           </Pressable>
         </View>

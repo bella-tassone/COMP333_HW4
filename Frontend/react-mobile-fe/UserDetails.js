@@ -6,6 +6,7 @@ export default function UserDetails({navigation, route}) {
 
   const [isLoading, setLoading] = useState(true);
   const [ratings, setRatings] = useState([]);
+
   
   useEffect(() => {
     axios.get(`http://129.133.188.164/index.php/rating/getUserRatings?user=${route.params.user}`)
@@ -16,8 +17,13 @@ export default function UserDetails({navigation, route}) {
     .catch(err => console.log(err));
   }, []);
 
+  const onSubmit = () => {
+    setLoading(true);
+    navigation.navigate("Home");
+  }
+
   return (
-    <View style={{ flex: 1, padding: 12 }}>
+    <View style={{ flex: 1, padding: 12, marginTop:40  }}>
       {/* As long as isLoading is true, show "Loading ..." */}
       {isLoading ? (
         <Text>Loading...</Text>
@@ -31,7 +37,7 @@ export default function UserDetails({navigation, route}) {
           }}
         >
           <View style={{alignItems:'flex-end'}}>
-            <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Home")}>
+            <Pressable style={styles.homeButton} onPress={onSubmit}>
               <Text style={styles.buttonText}>Home</Text>
             </Pressable>
           </View>
@@ -98,7 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical:5
   },
-  loginButton: {
+  homeButton: {
     backgroundColor: "steelblue",
     paddingVertical: 10,
     paddingHorizontal: 20,
