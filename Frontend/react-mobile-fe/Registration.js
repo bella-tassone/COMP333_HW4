@@ -1,71 +1,87 @@
 
-import React, { useEffect, useState } from "react";
-// FlatList renders items lazily, when they are about to appear, and removes
-// items that scroll way off screen to save memory and processing time.
+import React, { useState } from "react";
 import { Text, View, Pressable, StyleSheet, Alert, TextInput } from "react-native";
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function Registration({navigation}) {
 
-  const [username, onChangeUsername] = React.useState('');
-  const [password1, onChangePassword1] = React.useState('');
-  const [password2, onChangePassword2] = React.useState('');
+    const [username, setUsername] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
 
+    // when submit button is clicked
+    const handleSubmit = async () => {
 
-  useEffect(() => {
-    axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
-    .then((response) => {
-        setRating(response.data);
-        setLoading(false);
-    })
-    .catch(err => console.log(err));
-  }, []);
+        try {
+            const response = await axios.post('http://129.133.188.164/index.php/user/create', 
+            {username:username, password1:password1, password2:password2});
+            
+            if (response.status === 200) {
+            Alert.alert('Registration successful!');
+            //localStorage.setItem('username', inputs.username);
+            navigation.navigate("Home");
+            }
+        } catch (error) {
+            //console.error('API call error:', error);
+            if (error.response && error.response.data && error.response.data.error) {
+            Alert.alert(error.response.data.error); 
+            } else {
+            Alert.alert('An error occurred');
+            }
+        }
+    };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        marginTop: 175
-      }}
-    >
-      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginBottom:20}}>
-        Create your account!
-      </Text>
-      <View style={{alignItems:'center'}}>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeUsername}
-          value={username}
-          placeholder="Username"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangePassword1}
-          value={password1}
-          placeholder="Password"
-          secureTextEntry={true}
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangePassword2}
-          value={password2}
-          placeholder="Re-enter Password"
-          secureTextEntry={true}
-        />
-      </View>
-      <View style={{alignItems:'center'}}>
-        <Pressable style={styles.button} onPress={() => Alert.alert("heyyy")}>
-          <Text style={styles.buttonText}>Submit</Text>
+    <View style={{ flex: 1, padding: 12 }}>
+        <View style={{alignItems:'flex-end'}}>
+        <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
+            <Text style={styles.buttonText}>Home</Text>
         </Pressable>
-      </View>
-      <View style={{alignItems:'center', marginTop:10}}>
-        <Pressable onPress={() => navigation.navigate("Login")}>
-          <Text style={{textDecorationLine:'underline', color:'blue'}}>Already have an account? Login here!</Text>
-        </Pressable>
-      </View>
+        </View>
+        <View
+        style={{
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            marginTop: 50
+        }}
+        >
+        <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginBottom:20}}>
+            Create your account!
+        </Text>
+        <View style={{alignItems:'center'}}>
+            <TextInput
+            style={styles.input}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
+            placeholder="Username"
+            />
+            <TextInput
+            style={styles.input}
+            onChangeText={(text) => setPassword1(text)}
+            value={password1}
+            placeholder="Password"
+            secureTextEntry={true}
+            />
+            <TextInput
+            style={styles.input}
+            onChangeText={(text) => setPassword2(text)}
+            value={password2}
+            placeholder="Re-enter Password"
+            secureTextEntry={true}
+            />
+        </View>
+        <View style={{alignItems:'center'}}>
+            <Pressable style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Submit</Text>
+            </Pressable>
+        </View>
+        <View style={{alignItems:'center', marginTop:10}}>
+            <Pressable onPress={() => navigation.navigate("Login")}>
+            <Text style={{textDecorationLine:'underline', color:'blue'}}>Already have an account? Login here!</Text>
+            </Pressable>
+        </View>
+        </View>
     </View>
   );
 };
@@ -80,7 +96,7 @@ const styles = StyleSheet.create({
     width:300
   },
   button: {
-    backgroundColor: "grey",
+    backgroundColor: "steelblue",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -89,5 +105,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 16,
+  },
+  homeButton: {
+    backgroundColor: "steelblue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginVertical:2
   }
 });

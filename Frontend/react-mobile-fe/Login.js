@@ -1,10 +1,7 @@
 
-import React, { useEffect, useState } from "react";
-// FlatList renders items lazily, when they are about to appear, and removes
-// items that scroll way off screen to save memory and processing time.
+import React, { useState } from "react";
 import { Text, View, Pressable, StyleSheet, Alert, TextInput } from "react-native";
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function Login({navigation}) {
 
@@ -28,8 +25,7 @@ export default function Login({navigation}) {
         Alert.alert('Login failed. Please try again.');
       }
     } catch (error) {
-      console.error('API call error:', error);
-
+      //console.error('API call error:', error);
       if (error.response && error.response.data && error.response.data.error) {
         Alert.alert(error.response.data.error);
       } else {
@@ -39,41 +35,48 @@ export default function Login({navigation}) {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        marginTop: 175
-      }}
-    >
-      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginBottom:20}}>
-        Login to your account!
-      </Text>
-      <View style={{alignItems:'center'}}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setUsername(text)}
-          value={username}
-          placeholder="Username"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          placeholder="Password"
-          secureTextEntry={true}
-        />
-      </View>
-      <View style={{alignItems:'center'}}>
-        <Pressable style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
+    <View style={{ flex: 1, padding: 12 }}>
+      <View style={{alignItems:'flex-end'}}>
+        <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
+          <Text style={styles.buttonText}>Home</Text>
         </Pressable>
       </View>
-      <View style={{alignItems:'center', marginTop:10}}>
-        <Pressable onPress={() => navigation.navigate("Registration")}>
-          <Text style={{textDecorationLine:'underline', color:'blue'}}>Don't have an account? Register here!</Text>
-        </Pressable>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          marginTop:50
+        }}
+      >
+        <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginBottom:20}}>
+          Login to your account!
+        </Text>
+        <View style={{alignItems:'center'}}>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
+            placeholder="Username"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
+        </View>
+        <View style={{alignItems:'center'}}>
+          <Pressable style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </Pressable>
+        </View>
+        <View style={{alignItems:'center', marginTop:10}}>
+          <Pressable onPress={() => navigation.navigate("Registration")}>
+            <Text style={{textDecorationLine:'underline', color:'blue'}}>Don't have an account? Register here!</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -89,7 +92,7 @@ const styles = StyleSheet.create({
     width:300
   },
   button: {
-    backgroundColor: "grey",
+    backgroundColor: "steelblue",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -98,5 +101,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 16,
+  },
+  homeButton: {
+    backgroundColor: "steelblue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginVertical:2
   }
 });

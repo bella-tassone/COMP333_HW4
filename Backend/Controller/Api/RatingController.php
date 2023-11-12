@@ -52,7 +52,7 @@ class RatingController extends BaseController
 
                 //make sure that keys exist before assigning
                 if (!(array_key_exists('artist', $postData) && array_key_exists('song', $postData) && array_key_exists('rating', $postData))) {
-                    $strErrorDesc = "Not all data entered";
+                    $strErrorDesc = "Error: All fields must be filled!";
                     $strErrorHeader = 'HTTP/1.1 400 Bad Request';
                     }
 
@@ -64,7 +64,7 @@ class RatingController extends BaseController
 
                     //check to make sure fields are filled out
                     if (($artist == "") || ($song == "") || ($rating == "")) {
-                        $strErrorDesc = "Not all fields filled out";
+                        $strErrorDesc = "Error: All fields must be filled!";
                         $strErrorHeader = 'HTTP/1.1 400 Bad Request';
                     }
                     //check to make sure rating is an int between 1 and 5
@@ -177,7 +177,7 @@ class RatingController extends BaseController
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $arrQueryStringParams = $this->getQueryStringParams();
 
-        // Check if request method is DELETE
+        // Check if request method is PUT
         if (strtoupper($requestMethod) == 'PUT') {
             try {
                 $ratingModel = new RatingModel();
@@ -205,7 +205,7 @@ class RatingController extends BaseController
                     //conditional currently always returns true, to be compared against session info eventually
                     if ($username == $user) {
                         if ($rating == "") {
-                            $strErrorDesc = "Not all fields filled out";
+                            $strErrorDesc = "Error: All fields must be filled!";
                             $strErrorHeader = 'HTTP/1.1 400 Bad Request';
                         }
                         // shouldn't be able to update rating if no changes are made

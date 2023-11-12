@@ -17,7 +17,6 @@ export default function Home({navigation}) {
   }, []);
 
   return (
-    // Now the component parses the data and renders it using a FlatList component.
     <View style={{ flex: 1, padding: 12 }}>
       {/* As long as isLoading is true, show "Loading ..." */}
       {isLoading ? (
@@ -45,7 +44,7 @@ export default function Home({navigation}) {
             // The key from the data array is extracted using the keyExtractor
             // prop on the FlatList component.
             // renderItem takes an item from the data and renders it on a list.
-            style={{padding:12}}
+            style={{margin:12}}
             data={ratings}
             renderItem={({ item }) => (
               <TouchableOpacity 
@@ -53,11 +52,14 @@ export default function Home({navigation}) {
                     style={styles.button} 
                     onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating})}
                 >
-                <Text style={styles.buttonText}>{item.song + " by " + item.artist}</Text>
+                <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
+                  <Text style={styles.songText}>{item.song}</Text>
+                  <Text style={styles.artistText}>{"  by " + item.artist}</Text>
+                </View>
               </TouchableOpacity>
             )}
           />
-          <View style={{alignItems:'center', marginTop:10}}>
+          <View style={{alignItems:'center'}}>
             <Pressable style={styles.addRatingButton} onPress={() => Alert.alert("Simple Button pressed")}>
               <Text style={styles.buttonText}>Add Song</Text>
             </Pressable>
@@ -85,9 +87,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical:5
   },
+  songText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight:'bold'
+  },
+  artistText: {
+    color: "#fff",
+    fontSize: 20,
+    opacity: 0.5
+  },
   buttonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 16
   },
   addRatingButton: {
     backgroundColor: "steelblue",
