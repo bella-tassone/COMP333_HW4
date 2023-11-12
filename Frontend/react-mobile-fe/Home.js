@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable } from "react-native";
+import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable, TextInput } from "react-native";
 import axios from 'axios';
 
 export default function Home({navigation}) {
 
   const [isLoading, setLoading] = useState(true);
   const [ratings, setRatings] = useState([]);
+  const [search, setSearch] = useState("");
   
   useEffect(() => {
     axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
@@ -27,7 +28,7 @@ export default function Home({navigation}) {
           style={{
             flex: 1,
             flexDirection: "column",
-            justifyContent: "space-between"
+            justifyContent: "space-evenly"
           }}
         >
           <View style={{alignItems:'flex-end'}}>
@@ -35,7 +36,18 @@ export default function Home({navigation}) {
               <Text style={styles.buttonText}>Login</Text>
             </Pressable>
           </View>
-          <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop:10}}>
+          <View style={{flex:1, flexDirection:'row', justifyContent:'center', marginTop:20, alignItems:'center'}}>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setSearch(text)}
+              value={search}
+              placeholder="Search for a user"
+            />
+            <Pressable style={styles.searchButton} onPress={() => navigation.navigate("Search Results", {search:search})}>
+              <Text style={styles.buttonText}>Submit</Text>
+            </Pressable>
+          </View>
+          <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop:0}}>
             Ratings List
           </Text>
           <FlatList
@@ -52,7 +64,7 @@ export default function Home({navigation}) {
                     style={styles.button} 
                     onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating})}
                 >
-                <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
+                <View style={{flexDirection: 'row', justifyContent: "flex-start", alignItems: "center"}}>
                   <Text style={styles.songText}>{item.song}</Text>
                   <Text style={styles.artistText}>{"  by " + item.artist}</Text>
                 </View>
@@ -71,11 +83,6 @@ export default function Home({navigation}) {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   title: {
     fontSize: 20,
     marginBottom: 16,
@@ -113,6 +120,22 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    marginVertical:2
-  }
+    marginVertical:2,
+  },
+  input: {
+    height: 40,
+    margin: 10,
+    borderWidth: 1,
+    borderColor:"grey",
+    padding: 10,
+    width:250
+  },
+  searchButton: {
+    backgroundColor: "steelblue",
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    borderRadius: 10,
+    marginVertical:5,
+    height:42,
+  },
 });
