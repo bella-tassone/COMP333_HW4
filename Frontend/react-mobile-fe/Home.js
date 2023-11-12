@@ -59,7 +59,7 @@ export default function Home({navigation}) {
               </TouchableOpacity>
             )}
           />
-          <View style={{alignItems:'center', marginTop:10}}>
+          <View style={{alignItems:'center'}}>
             <Pressable style={styles.addRatingButton} onPress={() => Alert.alert("Simple Button pressed")}>
               <Text style={styles.buttonText}>Add Song</Text>
             </Pressable>
@@ -96,6 +96,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
     opacity: 0.5
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16
   },
   addRatingButton: {
     backgroundColor: "steelblue",
