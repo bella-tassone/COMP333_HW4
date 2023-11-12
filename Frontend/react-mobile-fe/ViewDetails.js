@@ -7,18 +7,10 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function ViewDetails({navigation, route}) {
-  // Initially, set isLoading to true and set up the setLoading function for
-  // later changing the isLoading value.
+
   const [isLoading, setLoading] = useState(true);
-  // Initially, set data to an empty array and set up the setData function for
-  // later changing the data value to the fetched data.
   const [rating, setRating] = useState([]);
 
-  // The useEffect hook is similar to the componentDidMount and
-  // componentDidUpdate in class components. For our anonymoust function, we will
-  // have one parameter, fetch(), and an empty function body.
-  // Note that items in a Django database can be retrieved that way as well.
-  // Try it out with Postman.
   useEffect(() => {
     axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
     .then((response) => {
@@ -34,10 +26,10 @@ export default function ViewDetails({navigation, route}) {
 
     for(let i=0; i<max; i++) {
         if (i<rating) {
-            stars[i] = <FontAwesomeIcon icon="fa-solid fa-star" color="gold" size={25}/>;
+            stars[i] = <FontAwesomeIcon key={i} icon="fa-solid fa-star" color="gold" size={25}/>;
         }
         else {
-            stars[i] = <FontAwesomeIcon icon="fa-regular fa-star" color="gold" size={25}/>;
+            stars[i] = <FontAwesomeIcon key={i} icon="fa-regular fa-star" color="gold" size={25}/>;
         }
     }
     return <Text>{stars}</Text>;

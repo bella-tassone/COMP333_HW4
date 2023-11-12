@@ -1,10 +1,7 @@
 
-import React, { useEffect, useState } from "react";
-// FlatList renders items lazily, when they are about to appear, and removes
-// items that scroll way off screen to save memory and processing time.
+import React, { useState } from "react";
 import { Text, View, Pressable, StyleSheet, Alert, TextInput } from "react-native";
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function Registration({navigation}) {
 
