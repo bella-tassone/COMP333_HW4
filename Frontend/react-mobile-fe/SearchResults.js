@@ -16,8 +16,13 @@ export default function SearchResults({navigation, route}) {
     .catch(err => console.log(err));
   }, []);
 
+  const onSubmit = () => {
+    setLoading(true);
+    navigation.navigate("Home");
+  }
+
   return (
-    <View style={{ flex: 1, padding: 12 }}>
+    <View style={{ flex: 1, padding: 12, marginTop:40  }}>
       {/* As long as isLoading is true, show "Loading ..." */}
       {isLoading ? (
         <Text>Loading...</Text>
@@ -31,7 +36,7 @@ export default function SearchResults({navigation, route}) {
           }}
         >
           <View style={{alignItems:'flex-end'}}>
-            <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Home")}>
+            <Pressable style={styles.loginButton} onPress={onSubmit}>
               <Text style={styles.buttonText}>Home</Text>
             </Pressable>
           </View>

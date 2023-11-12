@@ -10,7 +10,7 @@ export default function LogOut({navigation, route}) {
   // when submit button is clicked
   const handleLogOut = async () => {
     try {
-      await AsyncStorage.setItem('username', 'user');
+      await AsyncStorage.setItem('username', 'empty');
       onChange();
       navigation.navigate("Home");
     } catch (error) {

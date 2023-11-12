@@ -40,7 +40,7 @@ export default function Home({navigation}) {
   }
 
   return (
-    <View style={{ flex: 1, padding: 12 }}>
+    <View style={{ flex: 1, padding: 12, marginTop:40 }}>
       {/* As long as isLoading is true, show "Loading ..." */}
       {isLoading ? (
         <Text>Loading...</Text>
@@ -53,7 +53,7 @@ export default function Home({navigation}) {
             justifyContent: "space-evenly"
           }}
         >
-            {(user!='user') ? (
+            {(user!='empty') ? (
               <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop:0}}>{"Welcome, " + user + "!"}</Text>
                 <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out", {onChange: refreshUser})}>
@@ -103,11 +103,13 @@ export default function Home({navigation}) {
               </TouchableOpacity>
             )}
           />
+          {(user!='empty') ? (
           <View style={{alignItems:'center'}}>
             <Pressable style={styles.addRatingButton} onPress={() => Alert.alert("Simple Button pressed")}>
               <Text style={styles.buttonText}>Add Song</Text>
             </Pressable>
           </View>
+          ) : null }
         </View>
       )}
     </View>

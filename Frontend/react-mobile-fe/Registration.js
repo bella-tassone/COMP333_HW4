@@ -4,11 +4,12 @@ import { Text, View, Pressable, StyleSheet, Alert, TextInput } from "react-nativ
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Registration({navigation}) {
+export default function Registration({navigation, route}) {
 
     const [username, setUsername] = useState('');
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
+    const onChange = route.params.onChange;
 
     // when submit button is clicked
     const handleSubmit = async () => {
@@ -22,6 +23,7 @@ export default function Registration({navigation}) {
               setUsername('');
               setPassword1('');
               setPassword2('');
+              onChange();
               Alert.alert('Registration successful!');
               navigation.navigate("Home");
             }
@@ -36,7 +38,7 @@ export default function Registration({navigation}) {
     };
 
   return (
-    <View style={{ flex: 1, padding: 12 }}>
+    <View style={{ flex: 1, padding: 12, marginTop:40  }}>
         <View style={{alignItems:'flex-end'}}>
         <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
             <Text style={styles.buttonText}>Home</Text>

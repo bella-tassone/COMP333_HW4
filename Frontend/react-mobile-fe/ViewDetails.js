@@ -36,7 +36,7 @@ export default function ViewDetails({navigation, route}) {
 };
 
   return (
-    <View style={{ flex: 1, padding: 12 }}>
+    <View style={{ flex: 1, padding: 12, marginTop:40  }}>
       <View
         style={{
           flex: 1,

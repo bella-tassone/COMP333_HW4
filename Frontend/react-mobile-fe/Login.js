@@ -40,7 +40,7 @@ export default function Login({navigation, route}) {
   };
 
   return (
-    <View style={{ flex: 1, padding: 12 }}>
+    <View style={{ flex: 1, padding: 12, marginTop:40  }}>
       <View style={{alignItems:'flex-end'}}>
         <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
           <Text style={styles.buttonText}>Home</Text>
@@ -78,7 +78,7 @@ export default function Login({navigation, route}) {
           </Pressable>
         </View>
         <View style={{alignItems:'center', marginTop:10}}>
-          <Pressable onPress={() => navigation.navigate("Registration")}>
+          <Pressable onPress={() => navigation.navigate("Registration", {onChange: onChange})}>
             <Text style={{textDecorationLine:'underline', color:'blue'}}>Don't have an account? Register here!</Text>
           </Pressable>
         </View>
