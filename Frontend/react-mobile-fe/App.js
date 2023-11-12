@@ -8,6 +8,8 @@ import Home from "./Home";
 import ViewDetails from "./ViewDetails";
 import Login from "./Login";
 import Registration from "./Registration";
+import UserDetails from "./UserDetails";
+
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar as farFaStar} from '@fortawesome/free-regular-svg-icons';
@@ -25,6 +27,7 @@ function App() {
         <Stack.Screen name="Details" component={ViewDetails} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Registration" component={Registration} />
+        <Stack.Screen name="User Details" component={UserDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
