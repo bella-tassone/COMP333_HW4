@@ -1,7 +1,6 @@
 <?php
 class RatingController extends BaseController
 {
-    // to be populated with rating-related info
 
     public function getAction()
     {
@@ -38,8 +37,38 @@ class RatingController extends BaseController
         }
     }
 
-    
-    
+    public function getUserRatingsAction()
+    {
+        $strErrorDesc = '';
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        $arrQueryStringParams = $this->getQueryStringParams();
+        if (strtoupper($requestMethod) == 'GET') {
+            try {
+                $ratingModel = new RatingModel();
+                $user = $arrQueryStringParams['user'];
+                $arrRatings = $ratingModel->getRatingFromUsername($user);
+                $responseData = json_encode($arrRatings);
+            } catch (Error $e) {
+                $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else {
+            $strErrorDesc = 'Method not supported';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+        // send output 
+        if (!$strErrorDesc) {
+            $this->sendOutput(
+                $responseData,
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+            );
+        } else {
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)), 
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+        }
+    }
+
     public function createAction()
     {
         $strErrorDesc = '';

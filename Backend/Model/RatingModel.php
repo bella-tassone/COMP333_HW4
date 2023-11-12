@@ -23,6 +23,11 @@ class RatingModel extends Database
         return $this->read("SELECT * FROM ratings WHERE id = ?", ["i", $id]);
     }
 
+    public function getRatingFromUsername($username) 
+    {
+        return $this->read("SELECT * FROM ratings WHERE username = ?", ["s", $username]);
+    }
+
     public function createRating($username, $artist, $song, $rating)
     {
         return $this->cud("INSERT INTO ratings (username, artist, song, rating) VALUES (?, ?, ?, ?)", ["sssi", $username, $artist, $song, $rating]);
