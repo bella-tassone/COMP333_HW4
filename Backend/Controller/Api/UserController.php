@@ -9,11 +9,8 @@ class UserController extends BaseController
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 $userModel = new UserModel();
-                $intLimit = 10;
-                if (isset($arrQueryStringParams['limit']) && $arrQueryStringParams['limit']) {
-                    $intLimit = $arrQueryStringParams['limit'];
-                }
-                $arrUser = $userModel->getUserList($intLimit);
+                $search = $arrQueryStringParams['search'] . '%';
+                $arrUser = $userModel->getUserList($search);
                 $responseData = json_encode($arrUser);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';

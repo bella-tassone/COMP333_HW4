@@ -9,6 +9,8 @@ import ViewDetails from "./ViewDetails";
 import Login from "./Login";
 import Registration from "./Registration";
 import UserDetails from "./UserDetails";
+import SearchResults from "./SearchResults";
+
 
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -28,6 +30,7 @@ function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Registration" component={Registration} />
         <Stack.Screen name="User Details" component={UserDetails} />
+        <Stack.Screen name="Search Results" component={SearchResults} />
       </Stack.Navigator>
     </NavigationContainer>
   );
