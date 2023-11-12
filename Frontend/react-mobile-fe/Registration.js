@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Text, View, Pressable, StyleSheet, Alert, TextInput } from "react-native";
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Registration({navigation}) {
 
@@ -17,9 +18,12 @@ export default function Registration({navigation}) {
             {username:username, password1:password1, password2:password2});
             
             if (response.status === 200) {
-            Alert.alert('Registration successful!');
-            //localStorage.setItem('username', inputs.username);
-            navigation.navigate("Home");
+              await AsyncStorage.setItem('username', username);
+              setUsername('');
+              setPassword1('');
+              setPassword2('');
+              Alert.alert('Registration successful!');
+              navigation.navigate("Home");
             }
         } catch (error) {
             //console.error('API call error:', error);

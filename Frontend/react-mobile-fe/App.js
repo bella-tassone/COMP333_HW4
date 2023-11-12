@@ -10,6 +10,7 @@ import Login from "./Login";
 import Registration from "./Registration";
 import UserDetails from "./UserDetails";
 import SearchResults from "./SearchResults";
+import LogOut from "./LogOut";
 
 
 
@@ -28,6 +29,7 @@ function App() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Details" component={ViewDetails} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Log Out" component={LogOut} />
         <Stack.Screen name="Registration" component={Registration} />
         <Stack.Screen name="User Details" component={UserDetails} />
         <Stack.Screen name="Search Results" component={SearchResults} />

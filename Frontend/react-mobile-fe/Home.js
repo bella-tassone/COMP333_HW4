@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable, TextInput } from "react-native";
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({navigation}) {
 
   const [isLoading, setLoading] = useState(true);
   const [ratings, setRatings] = useState([]);
   const [search, setSearch] = useState("");
-  
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
+    AsyncStorage.getItem('username')
+    .then((value) => {
+      if (value) {
+        setUser(value);
+      }
+    })
+    .catch((e) => {
+      console.error('API call error:', e);
+    })
+
     axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
     .then((response) => {
         setRatings(response.data);
@@ -36,11 +48,21 @@ export default function Home({navigation}) {
             justifyContent: "space-evenly"
           }}
         >
-          <View style={{alignItems:'flex-end'}}>
-            <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Login")}>
-              <Text style={styles.buttonText}>Login</Text>
-            </Pressable>
-          </View>
+            {(user) ? (
+              <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
+                <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop:0}}>{"Welcome, " + user + "!"}</Text>
+                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out")}>
+                  <Text style={styles.buttonText}>Log Out</Text>
+                </Pressable>
+              </View>
+            ) : (
+              <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
+                <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop:0}}>Welcome!</Text>
+                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Login")}>
+                  <Text style={styles.buttonText}>Login</Text>
+                </Pressable>
+              </View>
+            )}
           <View style={{flex:1, flexDirection:'row', justifyContent:'center', marginTop:20, alignItems:'center'}}>
             <TextInput
               style={styles.input}

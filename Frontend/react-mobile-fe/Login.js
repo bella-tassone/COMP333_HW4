@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Text, View, Pressable, StyleSheet, Alert, TextInput } from "react-native";
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({navigation}) {
 
@@ -17,8 +18,10 @@ export default function Login({navigation}) {
         params: {username: username, password: password}
       });
       if (response.status === 200) {
+        await AsyncStorage.setItem('username', username);
+        setUsername('');
+        setPassword('');
         Alert.alert('Login successful!');
-        //localStorage.setItem('username', inputs.username);
         navigation.navigate("Home");
 
       } else {
