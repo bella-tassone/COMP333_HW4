@@ -35,9 +35,15 @@ export default function SearchResults({navigation, route}) {
               <Text style={styles.buttonText}>Home</Text>
             </Pressable>
           </View>
-          <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop:10, textDecorationLine:'underline'}}>
-            {"Search results for '" + route.params.search + "'"}
-          </Text>
+          {(route.params.search == '') ? (
+            <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop:10, textDecorationLine:'underline'}}>
+                {"Showing all users:"}
+            </Text>
+          ) : (
+            <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop:10, textDecorationLine:'underline'}}>
+                {"Search results for '" + route.params.search + "':"}
+            </Text>
+          )}
           {(Object.keys(users).length != 0) ? (
             <FlatList
                 style={{margin:12}}

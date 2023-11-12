@@ -17,6 +17,11 @@ export default function Home({navigation}) {
     .catch(err => console.log(err));
   }, []);
 
+  const clearAndSubmit = () => {
+    setSearch("");
+    navigation.navigate("Search Results", {search:search});
+  }
+
   return (
     <View style={{ flex: 1, padding: 12 }}>
       {/* As long as isLoading is true, show "Loading ..." */}
@@ -41,9 +46,9 @@ export default function Home({navigation}) {
               style={styles.input}
               onChangeText={(text) => setSearch(text)}
               value={search}
-              placeholder="Search for a user"
+              placeholder="Filter by username"
             />
-            <Pressable style={styles.searchButton} onPress={() => navigation.navigate("Search Results", {search:search})}>
+            <Pressable style={styles.searchButton} onPress={clearAndSubmit}>
               <Text style={styles.buttonText}>Submit</Text>
             </Pressable>
           </View>
