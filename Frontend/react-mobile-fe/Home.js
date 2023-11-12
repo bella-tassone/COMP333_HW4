@@ -94,7 +94,7 @@ export default function Home({navigation}) {
               <TouchableOpacity 
                     key={item.id}
                     style={styles.button} 
-                    onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating})}
+                    onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating, currentUser:user})}
                 >
                 <View style={{flexDirection: 'row', justifyContent: "flex-start", alignItems: "center"}}>
                   <Text style={styles.songText}>{item.song}</Text>

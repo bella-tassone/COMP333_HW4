@@ -10,6 +10,7 @@ export default function ViewDetails({navigation, route}) {
 
   const [isLoading, setLoading] = useState(true);
   const [rating, setRating] = useState([]);
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
@@ -71,6 +72,7 @@ export default function ViewDetails({navigation, route}) {
           </Text>
           {stars(route.params.rating)}
         </View>
+        {(route.params.user == route.params.currentUser) ? (
         <View style={{alignItems:'center', marginTop:30}}>
           <Pressable style={styles.button} onPress={() => Alert.alert("Simple Button pressed")}>
             <Text style={styles.text}>Update</Text>
@@ -79,6 +81,7 @@ export default function ViewDetails({navigation, route}) {
             <Text style={styles.text}>Delete</Text>
           </Pressable>
         </View>
+        ) : null}
       </View>
     </View>
   );
