@@ -13,7 +13,9 @@ export default function ViewDetails({navigation, route}) {
   const [user, setUser] = useState('');
 
   useEffect(() => {
+
     axios.get(`http://172.21.44.203/index.php/rating/get?limit=100`)
+
     .then((response) => {
         setRating(response.data);
         setLoading(false);

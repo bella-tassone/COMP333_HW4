@@ -20,11 +20,13 @@ export default function Home({navigation}) {
     .then((value) => {
       if (value) {
         setUser(value);
+        console.log('User retrieved:', value);
       }
     })
     .catch((e) => {
       console.error('API call error:', e);
     })
+
 
     axios.get(`http://172.21.44.203/index.php/rating/get?limit=100`)
     .then((response) => {
