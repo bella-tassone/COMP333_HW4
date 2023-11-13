@@ -103,7 +103,7 @@ export default function Home({navigation}) {
               </TouchableOpacity>
             )}
           />
-          {(user!='empty') ? (
+          {(user!='empty' && user!=null) ? (
           <View style={{alignItems:'center'}}>
             <Pressable style={styles.addRatingButton} onPress={() => Alert.alert("Simple Button pressed")}>
               <Text style={styles.buttonText}>Add Song</Text>
