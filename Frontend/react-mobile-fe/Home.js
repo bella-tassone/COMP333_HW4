@@ -56,21 +56,21 @@ export default function Home({navigation}) {
           }}
         >
             {(user!='empty' && user!=null) ? (
-              <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
-                <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop:0}}>{"Welcome, " + user + "!"}</Text>
+              <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', paddingBottom:20}}>
+                <Text style={{ fontSize: 25, color: "grey", textAlign: "center"}}>{"Welcome, " + user + "!"}</Text>
                 <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out", {onChange: refreshUser})}>
                   <Text style={styles.buttonText}>Log Out</Text>
                 </Pressable>
               </View>
             ) : (
-              <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
-                <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop:0}}>Welcome!</Text>
+              <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', paddingBottom:20}}>
+                <Text style={{ fontSize: 25, color: "grey", textAlign: "center"}}>Welcome!</Text>
                 <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Login", {onChange: refreshUser})}>
                   <Text style={styles.buttonText}>Login</Text>
                 </Pressable>
               </View>
             )}
-          <View style={{flex:0.3, flexDirection:'row', justifyContent:'center', marginTop:20, alignItems:'center'}}>
+          <View style={{flex:0.4, flexDirection:'row', justifyContent:'center', marginTop:20, alignItems:'center', marginBottom:20}}>
             <TextInput
               style={styles.input}
               onChangeText={(text) => setSearch(text)}
