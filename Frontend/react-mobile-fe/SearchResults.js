@@ -8,7 +8,7 @@ export default function SearchResults({navigation, route}) {
   const [users, setUsers] = useState([]);
   
   useEffect(() => {
-    axios.get(`http://129.133.188.164/index.php/user/get?search=${route.params.search}`)
+    axios.get(`http://172.21.44.203/index.php/user/get?search=${route.params.search}`)
     .then((response) => {
         setUsers(response.data);
         setLoading(false);

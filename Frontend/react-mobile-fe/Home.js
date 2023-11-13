@@ -26,7 +26,7 @@ export default function Home({navigation}) {
       console.error('API call error:', e);
     })
 
-    axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
+    axios.get(`http://172.21.44.203/index.php/rating/get?limit=100`)
     .then((response) => {
         setRatings(response.data);
         setLoading(false);
@@ -53,7 +53,7 @@ export default function Home({navigation}) {
             justifyContent: "space-evenly"
           }}
         >
-            {(user!='empty') ? (
+            {(user!='empty' && user!=null) ? (
               <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop:0}}>{"Welcome, " + user + "!"}</Text>
                 <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out", {onChange: refreshUser})}>
