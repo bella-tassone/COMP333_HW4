@@ -28,7 +28,7 @@ export default function Home({navigation}) {
     })
 
 
-    axios.get(`http://172.21.44.203/index.php/rating/get?limit=100`)
+    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
     .then((response) => {
         setRatings(response.data);
         setLoading(false);
