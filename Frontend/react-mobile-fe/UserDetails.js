@@ -9,7 +9,9 @@ export default function UserDetails({navigation, route}) {
 
   
   useEffect(() => {
-    axios.get(`http://172.21.219.9/index.php/rating/getUserRatings?user=${route.params.user}`)
+
+    axios.get(`http://172.21.44.203/index.php/rating/getUserRatings?user=${route.params.user}`)
+
     .then((response) => {
         setRatings(response.data);
         setLoading(false);

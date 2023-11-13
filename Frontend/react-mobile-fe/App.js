@@ -14,8 +14,6 @@ import LogOut from "./LogOut";
 import AddRating from "./AddRating";
 
 
-
-
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar as farFaStar} from '@fortawesome/free-regular-svg-icons';
 import { faStar as fasFaStar} from '@fortawesome/free-solid-svg-icons';

@@ -15,7 +15,8 @@ export default function Registration({navigation, route}) {
     const handleSubmit = async () => {
 
         try {
-            const response = await axios.post('http://172.21.219.9/index.php/user/create', 
+
+            const response = await axios.post('http://172.21.44.203/index.php/user/create', 
             {username:username, password1:password1, password2:password2});
             
             if (response.status === 200) {
