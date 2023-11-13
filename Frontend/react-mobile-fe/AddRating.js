@@ -26,7 +26,6 @@ export default function AddRating({ navigation, route }) {
     })
     .then(response => {
       Alert.alert("Success", "Rating added successfully");
-      // You can navigate back to the Home screen or do any other navigation logic here
       navigation.goBack();
     })
     .catch(error => {
@@ -36,6 +35,7 @@ export default function AddRating({ navigation, route }) {
   };
 
   return (
+    // Frontend view for add rating component
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
       <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop: 0 }}>
         Add Rating
