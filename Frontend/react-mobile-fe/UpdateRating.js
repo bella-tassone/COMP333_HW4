@@ -3,36 +3,30 @@ import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import axios from 'axios';
 
 export default function UpdateRating({ navigation, route }) {
-  // Use the 'route' parameter to get the 'user' prop
-  const user = route.params.user;
-  const idToUpdate = route.params.id;
+  const { user, id, song: initialSong, artist: initialArtist, rating: initialRating, currentUser } = route.params;
 
-  const [artist, setArtist] = useState("");
-  const [song, setSong] = useState("");
-  const [rating, setRating] = useState(route.params.rating?.toString() || "");
+  const [updatedArtist, setUpdatedArtist] = useState(initialArtist);
+  const [updatedSong, setUpdatedSong] = useState(initialSong);
+  const [rating, setRating] = useState(initialRating.toString());
 
   useEffect(() => {
     // Set initial state when the component mounts
-    if (route.params.artist) {
-      setArtist(route.params.artist);
-    }
-
-    if (route.params.song) {
-      setSong(route.params.song);
-    }
-
-    setRating(route.params.rating?.toString() || "");
-  }, [route.params.artist, route.params.song, route.params.rating]);
+    setUpdatedArtist(initialArtist);
+    setUpdatedSong(initialSong);
+    setRating(initialRating.toString());
+  }, [initialArtist, initialSong, initialRating]);
 
   const updateRating = () => {
-    if (!artist || !song || !rating) {
+    if (!updatedArtist || !updatedSong || !rating) {
       Alert.alert("Error", "All fields must be filled!");
       return;
     }
 
     // Make API call to update rating
-    axios.post(`http://172.21.219.9/index.php/rating/update?id=${idToUpdate}`, {
+    axios.post(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
       username: user,
+      artist: updatedArtist,
+      song: updatedSong,
       rating: parseInt(rating)
     })
     .then(response => {
@@ -45,7 +39,7 @@ export default function UpdateRating({ navigation, route }) {
       console.error(error);
     });
   };
-  
+
   return (
     // Frontend view for update rating component
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
@@ -54,20 +48,20 @@ export default function UpdateRating({ navigation, route }) {
       </Text>
       <TextInput
         style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
-        placeholder={artist} // Set placeholder to the artist value
-        defaultValue={artist}
+        placeholder="Artist"
+        value={updatedArtist}
         editable={false} // Make it unchangeable
       />
       <TextInput
         style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
-        placeholder={song} // Set placeholder to the song value
-        defaultValue={song}
+        placeholder={updatedSong}
+        value={updatedSong}
         editable={false} // Make it unchangeable
       />
       <TextInput
         style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
         placeholder="Rating (1-5)"
-        defaultValue={rating}
+        value={rating}
         onChangeText={setRating}
         keyboardType="numeric"
       />
