@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 // FlatList renders items lazily, when they are about to appear, and removes
 // items that scroll way off screen to save memory and processing time.
@@ -42,6 +41,11 @@ const handleDeleteRating = () => {
   navigation.navigate("DeleteRating", { id: route.params.id, user: route.params.user });
 };
 
+const handleUpdateRating = () => {
+  const { id, user, song, artist, rating, currentUser } = route.params;
+  navigation.navigate("UpdateRating", { id, user, song, artist, rating, currentUser });
+};
+
   return (
     <View style={{ flex: 1, padding: 12, marginTop:40  }}>
       <View
@@ -80,7 +84,7 @@ const handleDeleteRating = () => {
         </View>
         {(route.params.user == route.params.currentUser) ? (
         <View style={{alignItems:'center', marginTop:30}}>
-          <Pressable style={styles.button} onPress={() => Alert.alert("Simple Button pressed")}>
+          <Pressable style={styles.button} onPress={handleUpdateRating}>
             <Text style={styles.text}>Update</Text>
           </Pressable>
           <Pressable style={styles.button} onPress={handleDeleteRating}>            
