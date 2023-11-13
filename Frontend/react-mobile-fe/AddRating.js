@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, Alert, StyleSheet } from "react-native";
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function AddRating({ navigation, route }) {
   // Use the 'route' parameter to get the 'user' prop
@@ -8,7 +9,7 @@ export default function AddRating({ navigation, route }) {
 
   const [artist, setArtist] = useState("");
   const [song, setSong] = useState("");
-  const [rating, setRating] = useState("");
+  const [rating, setRating] = useState(0);
 
   const addRating = () => {
     if (!artist || !song || !rating) {
@@ -21,7 +22,7 @@ export default function AddRating({ navigation, route }) {
       username: user,
       artist: artist,
       song: song,
-      rating: parseInt(rating)
+      rating: rating
     })
     .then(response => {
       Alert.alert("Success", "Rating added successfully");
@@ -32,6 +33,26 @@ export default function AddRating({ navigation, route }) {
       Alert.alert("Error", "Failed to add rating");
       console.error(error);
     });
+  };
+
+  const changeStars = (index) => {
+    setRating(index+1);
+    stars(rating);
+  };
+
+  const stars = (rating) => {
+    const max = 5;
+    const stars = [];
+
+    for(let i=0; i<max; i++) {
+        if (i<rating) {
+            stars[i] = <Pressable key={i} onPress={() => changeStars(i)}><FontAwesomeIcon key={i} icon="fa-solid fa-star" color="gold" size={25}/></Pressable>;
+        }
+        else {
+            stars[i] = <Pressable key={i} onPress={() => changeStars(i)}><FontAwesomeIcon key={i} icon="fa-regular fa-star" color="gold" size={25}/></Pressable>;
+        }
+    }
+    return <Text>{stars}</Text>;
   };
 
   return (
@@ -64,13 +85,16 @@ export default function AddRating({ navigation, route }) {
           value={song}
           onChangeText={setSong}
         />
-        <TextInput
-          style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
-          placeholder="Rating (1-5)"
-          value={rating}
-          onChangeText={setRating}
-          keyboardType="numeric"
-        />
+        <View style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center"
+          }}>
+          <Text style={styles.detailsText}>
+            Rating:
+          </Text>
+          {stars(rating)}
+        </View>
         <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:30}}>
           <Pressable style={styles.button} onPress={addRating}>
             <Text style={styles.text}>Add Rating</Text>
