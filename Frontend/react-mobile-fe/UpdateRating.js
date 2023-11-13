@@ -23,7 +23,7 @@ export default function UpdateRating({ navigation, route }) {
     }
 
     // Make API call to update rating
-    axios.post(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
+    axios.put(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
       username: user,
       artist: updatedArtist,
       song: updatedSong,
@@ -54,7 +54,7 @@ export default function UpdateRating({ navigation, route }) {
       />
       <TextInput
         style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
-        placeholder={updatedSong}
+        placeholder="Song"
         value={updatedSong}
         editable={false} // Make it unchangeable
       />
