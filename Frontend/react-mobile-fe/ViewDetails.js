@@ -14,7 +14,7 @@ export default function ViewDetails({navigation, route}) {
 
   useEffect(() => {
 
-    axios.get(`http://172.21.44.203/index.php/rating/get?limit=100`)
+    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
 
     .then((response) => {
         setRating(response.data);
@@ -36,6 +36,10 @@ export default function ViewDetails({navigation, route}) {
         }
     }
     return <Text>{stars}</Text>;
+};
+
+const handleDeleteRating = () => {
+  navigation.navigate("DeleteRating", { id: route.params.id, user: route.params.user });
 };
 
   return (
@@ -79,7 +83,7 @@ export default function ViewDetails({navigation, route}) {
           <Pressable style={styles.button} onPress={() => Alert.alert("Simple Button pressed")}>
             <Text style={styles.text}>Update</Text>
           </Pressable>
-          <Pressable style={styles.button} onPress={() => Alert.alert("Simple Button pressed")}>
+          <Pressable style={styles.button} onPress={handleDeleteRating}>            
             <Text style={styles.text}>Delete</Text>
           </Pressable>
         </View>
