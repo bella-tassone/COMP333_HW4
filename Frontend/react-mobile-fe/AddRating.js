@@ -17,10 +17,10 @@ export default function AddRating({ navigation, route }) {
     }
 
     // Make API call to create rating
-    axios.post('http://172.21.219.9/index.php/rating/create', {
+    axios.post('http://172.21.44.203/index.php/rating/create', {
       username: user,
-      artist,
-      song,
+      artist: artist,
+      song: song,
       rating: parseInt(rating)
     })
     .then(response => {

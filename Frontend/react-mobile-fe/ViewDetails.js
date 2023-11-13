@@ -13,7 +13,7 @@ export default function ViewDetails({navigation, route}) {
 
   useEffect(() => {
 
-    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
+    axios.get(`http://172.21.44.203/index.php/rating/get?limit=100`)
 
     .then((response) => {
         setRating(response.data);
