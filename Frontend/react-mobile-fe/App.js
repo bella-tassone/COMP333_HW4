@@ -11,6 +11,8 @@ import Registration from "./Registration";
 import UserDetails from "./UserDetails";
 import SearchResults from "./SearchResults";
 import LogOut from "./LogOut";
+import AddRating from "./AddRating";
+
 
 
 
@@ -33,6 +35,7 @@ function App() {
         <Stack.Screen name="Registration" component={Registration} options={{headerShown: false}}  />
         <Stack.Screen name="User Details" component={UserDetails} options={{headerShown: false}}  />
         <Stack.Screen name="Search Results" component={SearchResults} options={{headerShown: false}}  />
+        <Stack.Screen name="AddRating" component={AddRating} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

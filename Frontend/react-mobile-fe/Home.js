@@ -20,13 +20,14 @@ export default function Home({navigation}) {
     .then((value) => {
       if (value) {
         setUser(value);
+        console.log('User retrieved:', value);
       }
     })
     .catch((e) => {
       console.error('API call error:', e);
     })
 
-    axios.get(`http://129.133.188.164/index.php/rating/get?limit=100`)
+    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
     .then((response) => {
         setRatings(response.data);
         setLoading(false);
@@ -104,11 +105,11 @@ export default function Home({navigation}) {
             )}
           />
           {(user!='empty') ? (
-          <View style={{alignItems:'center'}}>
-            <Pressable style={styles.addRatingButton} onPress={() => Alert.alert("Simple Button pressed")}>
-              <Text style={styles.buttonText}>Add Song</Text>
-            </Pressable>
-          </View>
+          <View style={{ alignItems: 'center' }}>
+          <Pressable style={styles.addRatingButton} onPress={() => navigation.navigate("AddRating", { user })}>
+            <Text style={styles.buttonText}>Add Song</Text>
+          </Pressable>
+        </View>
           ) : null }
         </View>
       )}

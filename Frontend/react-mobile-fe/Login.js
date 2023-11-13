@@ -15,7 +15,7 @@ export default function Login({navigation, route}) {
 
     try {
       // Assuming your API expects query parameters for a GET request
-      const response = await axios.get('http://129.133.188.164/index.php/user/login', {
+      const response = await axios.get('http://172.21.219.9/index.php/user/login', {
         params: {username: username, password: password}
       });
       if (response.status === 200) {
