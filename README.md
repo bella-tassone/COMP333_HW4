@@ -19,7 +19,9 @@ CREATE TABLE ratings (id INT(11) PRIMARY KEY AUTO_INCREMENT,
 
 Similarly, make sure that you have [Android Studio](https://developer.android.com/studio) installed, and an [Android Virtual Device (AVD)](https://developer.android.com/studio/run/managing-avds) created on it. We use a Pixel 5 API 31.
 
-You will want to install node.js and npm. You can get node.js by first installing [homebrew](https://brew.sh/) and then running the command `brew install node`. You can simply install npm by running `npm install`.
+<img width="572" alt="Screenshot 2023-11-12 at 10 37 26 PM" src="https://github.com/bella-tassone/COMP333_HW4/assets/54873610/0c21c168-5b7c-4e27-a6cb-0797729e3c73">
+
+You will want to make sure that you have installed node.js and npm. You can get node.js by first installing [homebrew](https://brew.sh/) and then running the command `brew install node`. You can simply install npm by running `npm install`.
 
 1. Clone this repository into your preferred directory. You may do so with the command `git clone https://github.com/bella-tassone/COMP333_HW4.git`.
 
@@ -40,11 +42,11 @@ define("DB_DATABASE_NAME", "music_db");
 
 5. You will need to change the IP addresses within the Frontend to match your own. You can find your own IP address by going into Wifi Settings -> Details. You will need to replace the given IP address with your own in the following files: `Home.js`, `Login.js`, `Registration.js`, `SearchResults.js`, `UserDetails.js`. We have left comments to help direct what needs to be replaced.
 
-6. In our app, we have various resources installed (reactstrap, icons, etc). They should already be contained within the repository, but if you want to confirm that everything is up-to-date, take a look at the following websites: [AsyncStorage](https://react-native-async-storage.github.io/async-storage/docs/install), [Fontawesome Icons](https://fontawesome.com/docs/web/use-with/react-native), [React Native Navigation](https://reactnative.dev/docs/navigation) (which you can install by running `npm install @react-navigation/native @react-navigation/stack` and then `expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`), and [Axios](https://www.npmjs.com/package/react-native-axios) (which you can install by running `npm install axios`). All of the other links should easily explain how to install and use their various resources.
+6. In our app, we have various resources installed (reactstrap, icons, etc). They should already be contained within the repository, but if you want to confirm that everything is up-to-date, take a look at the following websites: [AsyncStorage](https://react-native-async-storage.github.io/async-storage/docs/install), [Fontawesome Icons](https://fontawesome.com/docs/web/use-with/react-native), [React Native Navigation](https://reactnative.dev/docs/navigation) (which you can install by running `npm install @react-navigation/native @react-navigation/stack` and then `expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`), and [Axios](https://www.npmjs.com/package/react-native-axios) (which you can install by running `npm install axios`). The other links should easily explain how to install and use their various resources.
 
 7. Run your AVD from Android Studio's Virtual Device Manager. An android phone should appear and start up on your screen.
 
-8. Finally, within the react-mobile-fe directory, run the command `npx expo start`. You may then have to type `a` into the running terminal in order to open the app on your android device. The app should open momentarily, and you should be directed to the home ratings page.
+8. Finally, within the `react-mobile-fe` directory, run the command `npx expo start`. You may then have to type `a` into the running terminal in order to open the app on your android device. The app should open momentarily, and you should be directed to the home ratings page.
 
 **Note**: If your app does not appear connected on the AVD (perhaps you see a warning that says "Cannot connect to Metro"), click `Cmd-M` while you have the AVD selected and then select `Reload`.
 
