@@ -11,7 +11,6 @@ export default function AddRating({ navigation, route }) {
   const [rating, setRating] = useState("");
 
   const addRating = () => {
-    // Validate input fields
     if (!artist || !song || !rating) {
       Alert.alert("Error", "All fields must be filled!");
       return;

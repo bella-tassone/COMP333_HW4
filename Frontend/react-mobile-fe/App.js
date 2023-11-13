@@ -12,6 +12,8 @@ import UserDetails from "./UserDetails";
 import SearchResults from "./SearchResults";
 import LogOut from "./LogOut";
 import AddRating from "./AddRating";
+import DeleteRating from "./DeleteRating";
+
 
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -34,6 +36,7 @@ function App() {
         <Stack.Screen name="User Details" component={UserDetails} options={{headerShown: false}}  />
         <Stack.Screen name="Search Results" component={SearchResults} options={{headerShown: false}}  />
         <Stack.Screen name="AddRating" component={AddRating} options={{ headerShown: false }} />
+        <Stack.Screen name="DeleteRating" component={DeleteRating} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
