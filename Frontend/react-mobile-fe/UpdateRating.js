@@ -28,7 +28,7 @@ export default function UpdateRating({ navigation, route }) {
       username: user,
       artist: updatedArtist,
       song: updatedSong,
-      rating: parseInt(rating)
+      rating: rating
     })
     .then(response => {
       Alert.alert("Success", "Rating updated successfully");
@@ -36,8 +36,12 @@ export default function UpdateRating({ navigation, route }) {
       navigation.navigate("Home", { refresh: true });
     })
     .catch(error => {
-      Alert.alert("Error", "Failed to update rating");
-      console.error(error);
+      //console.error('API call error:', error);
+      if (error.response && error.response.data && error.response.data.error) {
+        Alert.alert(error.response.data.error);
+      } else {
+        Alert.alert('An error occurred');
+      }
     });
   };
 

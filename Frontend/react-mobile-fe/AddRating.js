@@ -30,8 +30,12 @@ export default function AddRating({ navigation, route }) {
       navigation.navigate("Home", { refresh: true });
     })
     .catch(error => {
-      Alert.alert("Error", "Failed to add rating");
-      console.error(error);
+      //console.error('API call error:', error);
+      if (error.response && error.response.data && error.response.data.error) {
+        Alert.alert(error.response.data.error);
+      } else {
+        Alert.alert('An error occurred');
+      }
     });
   };
 
