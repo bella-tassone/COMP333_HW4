@@ -13,6 +13,8 @@ import SearchResults from "./SearchResults";
 import LogOut from "./LogOut";
 import AddRating from "./AddRating";
 import DeleteRating from "./DeleteRating";
+import UpdateRating from "./UpdateRating";
+
 
 
 
@@ -37,6 +39,8 @@ function App() {
         <Stack.Screen name="Search Results" component={SearchResults} options={{headerShown: false}}  />
         <Stack.Screen name="AddRating" component={AddRating} options={{ headerShown: false }} />
         <Stack.Screen name="DeleteRating" component={DeleteRating} options={{ headerShown: false }} />
+        <Stack.Screen name="UpdateRating" component={UpdateRating} options={{ headerShown: false }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

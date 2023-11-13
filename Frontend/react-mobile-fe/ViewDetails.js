@@ -1,141 +1,76 @@
-
-import React, { useEffect, useState } from "react";
-// FlatList renders items lazily, when they are about to appear, and removes
-// items that scroll way off screen to save memory and processing time.
-import { Text, View, Pressable, StyleSheet, Alert } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
-export default function ViewDetails({navigation, route}) {
+export default function UpdateRating({ navigation, route }) {
+  const { user, id, song: initialSong, artist: initialArtist, rating: initialRating, currentUser } = route.params;
 
-  const [isLoading, setLoading] = useState(true);
-  const [rating, setRating] = useState([]);
-  const [user, setUser] = useState('');
+  const [updatedArtist, setUpdatedArtist] = useState(initialArtist);
+  const [updatedSong, setUpdatedSong] = useState(initialSong);
+  const [rating, setRating] = useState(initialRating.toString());
 
   useEffect(() => {
+    // Set initial state when the component mounts
+    setUpdatedArtist(initialArtist);
+    setUpdatedSong(initialSong);
+    setRating(initialRating.toString());
+  }, [initialArtist, initialSong, initialRating]);
 
-    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
-
-    .then((response) => {
-        setRating(response.data);
-        setLoading(false);
-    })
-    .catch(err => console.log(err));
-  }, []);
-
-  const stars = (rating) => {
-    const max = 5;
-    const stars = [];
-
-    for(let i=0; i<max; i++) {
-        if (i<rating) {
-            stars[i] = <FontAwesomeIcon key={i} icon="fa-solid fa-star" color="gold" size={25}/>;
-        }
-        else {
-            stars[i] = <FontAwesomeIcon key={i} icon="fa-regular fa-star" color="gold" size={25}/>;
-        }
+  const updateRating = () => {
+    if (!updatedArtist || !updatedSong || !rating) {
+      Alert.alert("Error", "All fields must be filled!");
+      return;
     }
-    return <Text>{stars}</Text>;
-};
 
-const handleDeleteRating = () => {
-  navigation.navigate("DeleteRating", { id: route.params.id, user: route.params.user });
-};
+    // Make API call to update rating
+    axios.post(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
+      username: user,
+      artist: updatedArtist,
+      song: updatedSong,
+      rating: parseInt(rating)
+    })
+    .then(response => {
+      Alert.alert("Success", "Rating updated successfully");
+      // Navigate back to the Home screen
+      navigation.navigate("Home", { refresh: true });
+    })
+    .catch(error => {
+      Alert.alert("Error", "Failed to update rating");
+      console.error(error);
+    });
+  };
 
   return (
-    <View style={{ flex: 1, padding: 12, marginTop:40  }}>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "flex-start"
-        }}
+    // Frontend view for update rating component
+    <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
+      <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop: 0 }}>
+        Update Rating
+      </Text>
+      <TextInput
+        style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
+        placeholder="Artist"
+        value={updatedArtist}
+        editable={false} // Make it unchangeable
+      />
+      <TextInput
+        style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
+        placeholder={updatedSong}
+        value={updatedSong}
+        editable={false} // Make it unchangeable
+      />
+      <TextInput
+        style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
+        placeholder="Rating (1-5)"
+        value={rating}
+        onChangeText={setRating}
+        keyboardType="numeric"
+      />
+      <Pressable
+        style={{ backgroundColor: "steelblue", paddingVertical: 10, paddingHorizontal: 20, borderRadius: 10, marginVertical: 5 }}
+        onPress={updateRating}
       >
-        <View style={{alignItems:'flex-end'}}>
-          <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
-            <Text style={styles.buttonText}>Home</Text>
-          </Pressable>
-        </View>
-        <Text style={styles.detailsText}>
-          Song: {route.params.song}
-        </Text>
-        <Text style={styles.detailsText}>
-          Artist: {route.params.artist}
-        </Text>
-        <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
-          <Text style={styles.detailsText}>{'User: '}</Text>
-          <Pressable onPress={() => navigation.navigate("User Details", {user: route.params.user})}>
-            <Text style={styles.userText}>{'@' + route.params.user}</Text>
-          </Pressable>
-        </View>
-        <View style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center"
-          }}>
-          <Text style={styles.detailsText}>
-            Rating:
-          </Text>
-          {stars(route.params.rating)}
-        </View>
-        {(route.params.user == route.params.currentUser) ? (
-        <View style={{alignItems:'center', marginTop:30}}>
-          <Pressable style={styles.button} onPress={() => Alert.alert("Simple Button pressed")}>
-            <Text style={styles.text}>Update</Text>
-          </Pressable>
-          <Pressable style={styles.button} onPress={handleDeleteRating}>            
-            <Text style={styles.text}>Delete</Text>
-          </Pressable>
-        </View>
-        ) : null}
-      </View>
+        <Text style={{ color: "#fff", fontSize: 16 }}>Update Rating</Text>
+      </Pressable>
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  detailsText: {
-    marginTop: 5,
-    marginBottom: 5,
-    fontSize: 25,
-    color: "grey",
-    textAlign: "center"
-  },
-  userText: {
-    marginTop: 5,
-    marginBottom: 5,
-    fontSize: 25,
-    color: "blue",
-    textAlign: "center",
-    textDecorationLine:'underline'
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: 'steelblue',
-    marginVertical:7,
-  },
-  text: {
-    fontSize: 20,
-    lineHeight: 21,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
-  },
-  homeButton: {
-    backgroundColor: "steelblue",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    marginVertical:2,
-    marginBottom: 30
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16
-  }
-});
+}
