@@ -70,7 +70,7 @@ export default function Home({navigation}) {
                 </Pressable>
               </View>
             )}
-          <View style={{flex:0.3, flexDirection:'row', justifyContent:'center', marginTop:20, alignItems:'center'}}>
+          <View style={{flex:0.6, flexDirection:'row', justifyContent:'center', marginTop:20, alignItems:'center'}}>
             <TextInput
               style={styles.input}
               onChangeText={(text) => setSearch(text)}
