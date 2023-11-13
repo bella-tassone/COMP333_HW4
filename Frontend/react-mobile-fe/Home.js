@@ -106,10 +106,10 @@ export default function Home({navigation}) {
             )}
           />
           {(user!='empty' && user!=null) ? (
-          <View style={{alignItems:'center'}}>
-            <Pressable style={styles.addRatingButton} onPress={() => Alert.alert("Simple Button pressed")}>
-              <Text style={styles.buttonText}>Add Song</Text>
-            </Pressable>
+          <View style={{ alignItems: 'center' }}>
+          <Pressable style={styles.addRatingButton} onPress={() => navigation.navigate("AddRating", { user })}>
+            <Text style={styles.buttonText}>Add Song</Text>
+          </Pressable>
           </View>
           ) : null }
         </View>
