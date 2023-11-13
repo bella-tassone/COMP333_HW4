@@ -26,7 +26,8 @@ export default function AddRating({ navigation, route }) {
     })
     .then(response => {
       Alert.alert("Success", "Rating added successfully");
-      navigation.goBack();
+      // Navigate back to the Home screen
+      navigation.navigate("Home", { refresh: true });
     })
     .catch(error => {
       Alert.alert("Error", "Failed to add rating");
