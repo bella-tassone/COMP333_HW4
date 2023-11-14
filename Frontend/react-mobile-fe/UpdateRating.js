@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Pressable, Alert } from "react-native";
+import { View, Text, TextInput, Pressable, Alert, StyleSheet } from "react-native";
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'; // Make sure you import FontAwesomeIcon
+
 
 
 export default function UpdateRating({ navigation, route }) {
@@ -118,3 +120,41 @@ export default function UpdateRating({ navigation, route }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  detailsText: {
+    marginTop: 5,
+    marginBottom: 5,
+    fontSize: 25,
+    color: "grey",
+    textAlign: "center"
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    backgroundColor: 'steelblue',
+    margin:5,
+  },
+  text: {
+    fontSize: 20,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
+  },
+  homeButton: {
+    backgroundColor: "steelblue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginVertical:2,
+    marginBottom: 30
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16
+  }
+});

@@ -10,9 +10,14 @@ export default function Home({navigation}) {
   const [search, setSearch] = useState("");
   const [user, setUser] = useState('');
   const [userChange, setUserChange] = useState(false);
+  const [ratingsChange, setRatingsChange] = useState(false);
 
   const refreshUser = () => {
     setUserChange(!userChange);
+  }
+
+  const refreshRatings = () => {
+    setRatingsChange(!ratingsChange);
   }
 
   useEffect(() => {
@@ -34,7 +39,7 @@ export default function Home({navigation}) {
         setLoading(false);
     })
     .catch(err => console.log(err));
-  }, [userChange]);
+  }, [userChange, ratingsChange]);
 
   const clearAndSubmit = () => {
     setSearch("");

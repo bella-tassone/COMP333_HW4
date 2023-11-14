@@ -29,6 +29,7 @@ export default function AddRating({ navigation, route }) {
     })
     .then(response => {
       Alert.alert("Success", "Rating added successfully");
+      onRatingAdded();
       // Navigate back to the Home screen
       navigation.navigate("Home", { refresh: true });
     })
