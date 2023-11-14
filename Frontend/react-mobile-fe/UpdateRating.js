@@ -17,30 +17,32 @@ export default function UpdateRating({ navigation, route }) {
     setRating(initialRating);
   }, [initialArtist, initialSong, initialRating]);
 
-  const updateRating = async () => {
+  const updateRating = () => {
     if (!updatedArtist || !updatedSong || !rating) {
       Alert.alert("Error", "All fields must be filled!");
       return;
     }
 
-    try {
-      // Make API call to update rating
-      await axios.put(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
-        username: user,
-        artist: updatedArtist,
-        song: updatedSong,
-        rating: parseInt(rating)
-      });
-      
+    // Make API call to update rating
+    axios.put(`http://172.21.44.203/index.php/rating/update?id=${id}`, {
+      username: user,
+      artist: updatedArtist,
+      song: updatedSong,
+      rating: rating
+    })
+    .then(response => {
       Alert.alert("Success", "Rating updated successfully");
-
-      // Navigate back to the Home screen and trigger a refresh
+      // Navigate back to the Home screen
       navigation.navigate("Home", { refresh: true });
-    } catch (error) {
-      Alert.alert("Error", "Failed to update rating");
-      console.error(error);
-    }
-
+    })
+    .catch(error => {
+      //console.error('API call error:', error);
+      if (error.response && error.response.data && error.response.data.error) {
+        Alert.alert(error.response.data.error);
+      } else {
+        Alert.alert('An error occurred');
+      }
+    });
   };
 
   const changeStars = (index) => {
@@ -66,32 +68,12 @@ export default function UpdateRating({ navigation, route }) {
   return (
     // Frontend view for update rating component
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
-      <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop: 0 }}>
-        Update Rating
-      </Text>
-      <TextInput
-        style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
-        placeholder="Artist"
-        value={updatedArtist}
-        onChangeText={setUpdatedArtist}
-      />
-      <TextInput
-        style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
-        placeholder="Song"
-        value={updatedSong}
-        onChangeText={setUpdatedSong}
-      />
-      <TextInput
-        style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
-        placeholder="Rating (1-5)"
-        value={rating}
-        onChangeText={setRating}
-        keyboardType="numeric"
-      />
-      <Pressable
-        style={{ backgroundColor: "steelblue", paddingVertical: 10, paddingHorizontal: 20, borderRadius: 10, marginVertical: 5 }}
-        onPress={updateRating}
-
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "flex-start"
+        }}
       >
         <View style={{alignItems:'flex-end'}}>
           <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
