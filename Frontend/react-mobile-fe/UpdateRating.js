@@ -71,6 +71,7 @@ export default function UpdateRating({ navigation, route }) {
   return (
     // Frontend view for update rating component
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
+      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Username: " + currentUser}</Text>
       <View
         style={{
           flex: 1,

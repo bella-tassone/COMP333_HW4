@@ -26,6 +26,7 @@ export default function UserDetails({navigation, route}) {
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop:40  }}>
+      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Username: " + route.params.currentUser}</Text>
       {/* As long as isLoading is true, show "Loading ..." */}
       {isLoading ? (
         <Text>Loading...</Text>

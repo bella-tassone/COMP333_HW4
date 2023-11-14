@@ -47,7 +47,7 @@ const handleUpdateRating = () => {
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop:40  }}>
-      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Hello, " + user + "!"}</Text>
+      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Username: " + user}</Text>
       <View
         style={{
           flex: 1,
@@ -68,7 +68,7 @@ const handleUpdateRating = () => {
         </Text>
         <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
           <Text style={styles.detailsText}>{'User: '}</Text>
-          <Pressable onPress={() => navigation.navigate("User Details", {user: route.params.user})}>
+          <Pressable onPress={() => navigation.navigate("User Details", {user: route.params.user, currentUser:user})}>
             <Text style={styles.userText}>{'@' + route.params.user}</Text>
           </Pressable>
         </View>

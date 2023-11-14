@@ -66,7 +66,7 @@ export default function AddRating({ navigation, route }) {
   return (
     // Frontend view for add rating component
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
-      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Hello, " + user + "!"}</Text>
+      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Username: " + user}</Text>
       <View
         style={{
           flex: 1,

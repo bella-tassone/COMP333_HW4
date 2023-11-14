@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable, TextInput } from "react-native";
+import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable, TextInput, LogBox } from "react-native";
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({navigation}) {
+
+  //Hide warnings, as they don't affect functionality
+  //Source: https://stackoverflow.com/questions/66310505/non-serializable-values-were-found-in-the-navigation-state-when-passing-a-functi
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
 
   const [isLoading, setLoading] = useState(true);
   const [ratings, setRatings] = useState([]);
@@ -43,7 +49,7 @@ export default function Home({navigation}) {
 
   const clearAndSubmit = () => {
     setSearch("");
-    navigation.navigate("Search Results", {search:search});
+    navigation.navigate("Search Results", {search:search, currentUser:user});
   }
 
   return (
@@ -63,7 +69,7 @@ export default function Home({navigation}) {
             {(user!='empty' && user!=null) ? (
               <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', paddingBottom:20}}>
                 <Text style={{ fontSize: 25, color: "grey", textAlign: "center"}}>{"Welcome, " + user + "!"}</Text>
-                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out", {onChange: refreshUser})}>
+                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out", {onChange: refreshUser, currentUser:user})}>
                   <Text style={styles.buttonText}>Log Out</Text>
                 </Pressable>
               </View>

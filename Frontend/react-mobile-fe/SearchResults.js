@@ -25,6 +25,8 @@ export default function SearchResults({navigation, route}) {
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop:40  }}>
+      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Username: " + route.params.currentUser}</Text>
+
       {/* As long as isLoading is true, show "Loading ..." */}
       {isLoading ? (
         <Text>Loading...</Text>
@@ -59,7 +61,7 @@ export default function SearchResults({navigation, route}) {
                 <TouchableOpacity 
                         key={item.username}
                         style={styles.button} 
-                        onPress={() => navigation.navigate("User Details", {user: item.username})}
+                        onPress={() => navigation.navigate("User Details", {user: item.username, currentUser:route.params.currentUser})}
                     >
                     <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
                     <Text style={styles.userText}>{'@' + item.username}</Text>
