@@ -16,28 +16,29 @@ export default function UpdateRating({ navigation, route }) {
     setRating(initialRating.toString());
   }, [initialArtist, initialSong, initialRating]);
 
-  const updateRating = () => {
+  const updateRating = async () => {
     if (!updatedArtist || !updatedSong || !rating) {
       Alert.alert("Error", "All fields must be filled!");
       return;
     }
 
-    // Make API call to update rating
-    axios.put(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
-      username: user,
-      artist: updatedArtist,
-      song: updatedSong,
-      rating: parseInt(rating)
-    })
-    .then(response => {
+    try {
+      // Make API call to update rating
+      await axios.put(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
+        username: user,
+        artist: updatedArtist,
+        song: updatedSong,
+        rating: parseInt(rating)
+      });
+
       Alert.alert("Success", "Rating updated successfully");
-      // Navigate back to the Home screen
+
+      // Navigate back to the Home screen and trigger a refresh
       navigation.navigate("Home", { refresh: true });
-    })
-    .catch(error => {
+    } catch (error) {
       Alert.alert("Error", "Failed to update rating");
       console.error(error);
-    });
+    }
   };
 
   return (
@@ -50,13 +51,13 @@ export default function UpdateRating({ navigation, route }) {
         style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
         placeholder="Artist"
         value={updatedArtist}
-        editable={false} // Make it unchangeable
+        onChangeText={setUpdatedArtist}
       />
       <TextInput
         style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
         placeholder="Song"
         value={updatedSong}
-        editable={false} // Make it unchangeable
+        onChangeText={setUpdatedSong}
       />
       <TextInput
         style={{ height: 40, margin: 10, borderWidth: 1, borderColor: "grey", padding: 10 }}
