@@ -7,20 +7,22 @@ export default function DeleteRating({ navigation, route }) {
   const user = route.params.user;
 
   useEffect(() => {
-    // Make API call to delete the rating
-    axios.delete(`http://172.21.44.203/index.php/rating/delete?id=${idToDelete}`, {
+    axios.delete(`http://172.21.219.9/index.php/rating/delete?id=${idToDelete}`, {
       data: { username: user }
     })
     .then(response => {
       Alert.alert("Success", "Rating deleted successfully");
-      // Navigate back to the Home screen and trigger a refresh
-      navigation.navigate("Home", { refresh: true });
+      const onRatingDeleted = route.params.onRatingDeleted;
+      if (onRatingDeleted) {
+        onRatingDeleted(idToDelete);
+      }
+      navigation.navigate("Home"); // Navigate back to Home after deleting
     })
     .catch(error => {
       Alert.alert("Error", "Failed to delete rating");
       console.error(error);
     });
-  }, [idToDelete, user, navigation]);
+  }, [idToDelete, user, route.params.onRatingDeleted, navigation]);
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>

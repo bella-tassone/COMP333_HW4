@@ -3,10 +3,7 @@ import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable, T
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Home({navigation}) {
-
-  //Hide warnings, as they don't affect functionality
-  //Source: https://stackoverflow.com/questions/66310505/non-serializable-values-were-found-in-the-navigation-state-when-passing-a-functi
+export default function Home({ navigation }) {
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
   ]);
@@ -17,6 +14,10 @@ export default function Home({navigation}) {
   const [user, setUser] = useState('');
   const [userChange, setUserChange] = useState(false);
   const [ratingsChange, setRatingsChange] = useState(false);
+
+  const removeRating = (id) => {
+    setRatings((prevRatings) => prevRatings.filter((rating) => rating.id !== id));
+  };
 
   const refreshUser = () => {
     setUserChange(!userChange);
@@ -38,8 +39,7 @@ export default function Home({navigation}) {
       console.error('API call error:', e);
     })
 
-
-    axios.get(`http://172.21.44.203/index.php/rating/get?limit=100`)
+    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
     .then((response) => {
         setRatings(response.data);
         setLoading(false);
@@ -49,39 +49,31 @@ export default function Home({navigation}) {
 
   const clearAndSubmit = () => {
     setSearch("");
-    navigation.navigate("Search Results", {search:search, currentUser:user});
+    navigation.navigate("Search Results", {search: search, currentUser: user});
   }
 
   return (
-    <View style={{ flex: 1, padding: 12, marginTop:40 }}>
-      {/* As long as isLoading is true, show "Loading ..." */}
+    <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
       {isLoading ? (
         <Text>Loading...</Text>
       ) : (
-        // Once it is false, show the fetched data.
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "space-evenly"
-          }}
-        >
-            {(user!='empty' && user!=null) ? (
-              <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', paddingBottom:20}}>
-                <Text style={{ fontSize: 25, color: "grey", textAlign: "center"}}>{"Welcome, " + user + "!"}</Text>
-                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out", {onChange: refreshUser, currentUser:user})}>
-                  <Text style={styles.buttonText}>Log Out</Text>
-                </Pressable>
-              </View>
-            ) : (
-              <View style={{flexDirection: 'row', justifyContent:'space-between', alignItems:'center', paddingBottom:20}}>
-                <Text style={{ fontSize: 25, color: "grey", textAlign: "center"}}>Welcome!</Text>
-                <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Login", {onChange: refreshUser})}>
-                  <Text style={styles.buttonText}>Login</Text>
-                </Pressable>
-              </View>
-            )}
-          <View style={{flex:0.4, flexDirection:'row', justifyContent:'center', marginTop:20, alignItems:'center', marginBottom:20}}>
+        <View style={{ flex: 1, flexDirection: "column", justifyContent: "space-evenly" }}>
+          {(user !== 'empty' && user != null) ? (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 20 }}>
+              <Text style={{ fontSize: 25, color: "grey", textAlign: "center" }}>{"Welcome, " + user + "!"}</Text>
+              <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Log Out", { onChange: refreshUser, currentUser: user })}>
+                <Text style={styles.buttonText}>Log Out</Text>
+              </Pressable>
+            </View>
+          ) : (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 20 }}>
+              <Text style={{ fontSize: 25, color: "grey", textAlign: "center" }}>Welcome!</Text>
+              <Pressable style={styles.loginButton} onPress={() => navigation.navigate("Login", { onChange: refreshUser })}>
+                <Text style={styles.buttonText}>Login</Text>
+              </Pressable>
+            </View>
+          )}
+          <View style={{ flex: 0.4, flexDirection: 'row', justifyContent: 'center', marginTop: 20, alignItems: 'center', marginBottom: 20 }}>
             <TextInput
               style={styles.input}
               onChangeText={(text) => setSearch(text)}
@@ -92,42 +84,45 @@ export default function Home({navigation}) {
               <Text style={styles.buttonText}>Submit</Text>
             </Pressable>
           </View>
-          <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop:0}}>
+          <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop: 0 }}>
             Ratings List
           </Text>
           <FlatList
-            // We use various props of the built-in FlatList component.
-            // data refers to our data; it is an array [ ].
-            // The key from the data array is extracted using the keyExtractor
-            // prop on the FlatList component.
-            // renderItem takes an item from the data and renders it on a list.
-            style={{margin:12}}
+            style={{ margin: 12 }}
             data={ratings}
             renderItem={({ item }) => (
-              <TouchableOpacity 
-                    key={item.id}
-                    style={styles.button} 
-                    onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating, currentUser:user})}
-                >
-                <View style={{flexDirection: 'row', justifyContent: "flex-start", alignItems: "center"}}>
+              <TouchableOpacity
+                key={item.id}
+                style={styles.button}
+                onPress={() => navigation.navigate("Details", {
+                  id: item.id,
+                  song: item.song,
+                  artist: item.artist,
+                  user: item.username,
+                  rating: item.rating,
+                  currentUser: user,
+                  onRatingDeleted: removeRating
+                })}
+              >
+                <View style={{ flexDirection: 'row', justifyContent: "flex-start", alignItems: "center" }}>
                   <Text style={styles.songText}>{item.song}</Text>
                   <Text style={styles.artistText}>{"  by " + item.artist}</Text>
                 </View>
               </TouchableOpacity>
             )}
           />
-          {(user!='empty' && user!=null) ? (
-          <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.addRatingButton} onPress={() => navigation.navigate("AddRating", { user, onRatingAdded: () => refreshRatings() })}>
-            <Text style={styles.buttonText}>Add Song</Text>
-          </Pressable>
-          </View>
-          ) : null }
+          {(user !== 'empty' && user != null) ? (
+            <View style={{ alignItems: 'center' }}>
+              <Pressable style={styles.addRatingButton} onPress={() => navigation.navigate("AddRating", { user, onRatingAdded: () => refreshRatings() })}>
+                <Text style={styles.buttonText}>Add Song</Text>
+              </Pressable>
+            </View>
+          ) : null}
         </View>
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   title: {

@@ -27,7 +27,7 @@ export default function UpdateRating({ navigation, route }) {
     }
 
     // Make API call to update rating
-    axios.put(`http://172.21.44.203/index.php/rating/update?id=${id}`, {
+    axios.put(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
       username: user,
       artist: updatedArtist,
       song: updatedSong,
