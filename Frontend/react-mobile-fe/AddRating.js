@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, Alert, StyleSheet } from "react-native";
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'; // Make sure you import FontAwesomeIcon
+
 
 export default function AddRating({ navigation, route }) {
+  
   // Use the 'route' parameter to get the 'user' prop
   const user = route.params.user;
+  const onRatingAdded = route.params.onRatingAdded || (() => {});
 
   const [artist, setArtist] = useState("");
   const [song, setSong] = useState("");
@@ -62,6 +65,7 @@ export default function AddRating({ navigation, route }) {
   return (
     // Frontend view for add rating component
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
+      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Hello, " + user + "!"}</Text>
       <View
         style={{
           flex: 1,
@@ -112,40 +116,41 @@ export default function AddRating({ navigation, route }) {
   );
 }
 
+
 const styles = StyleSheet.create({
-  detailsText: {
-    marginTop: 5,
-    marginBottom: 5,
-    fontSize: 25,
-    color: "grey",
-    textAlign: "center"
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    backgroundColor: 'steelblue',
-    margin:5,
-  },
-  text: {
-    fontSize: 20,
-    lineHeight: 21,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
-  },
-  homeButton: {
-    backgroundColor: "steelblue",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    marginVertical:2,
-    marginBottom: 30
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16
-  }
+ detailsText: {
+   marginTop: 5,
+   marginBottom: 5,
+   fontSize: 25,
+   color: "grey",
+   textAlign: "center"
+ },
+ button: {
+   alignItems: 'center',
+   justifyContent: 'center',
+   paddingVertical: 10,
+   paddingHorizontal: 20,
+   borderRadius: 10,
+   backgroundColor: 'steelblue',
+   margin:5,
+ },
+ text: {
+   fontSize: 20,
+   lineHeight: 21,
+   fontWeight: 'bold',
+   letterSpacing: 0.25,
+   color: 'white',
+ },
+ homeButton: {
+   backgroundColor: "steelblue",
+   paddingVertical: 10,
+   paddingHorizontal: 20,
+   borderRadius: 10,
+   marginVertical:2,
+   marginBottom: 30
+ },
+ buttonText: {
+   color: "#fff",
+   fontSize: 16
+ }
 });
