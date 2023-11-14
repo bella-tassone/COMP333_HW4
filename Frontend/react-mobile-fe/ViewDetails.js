@@ -37,8 +37,8 @@ export default function ViewDetails({ navigation, route }) {
   };
 
   const handleUpdateRating = () => {
-    const { id, user, song, artist, rating, currentUser } = route.params;
-    navigation.navigate("UpdateRating", { id, user, song, artist, rating, currentUser });
+    const { id, user, song, artist, rating, currentUser, onRatingUpdated } = route.params;
+    navigation.navigate("UpdateRating", { id, user, song, artist, rating, currentUser, onRatingUpdated });
   };
 
   return (

@@ -101,7 +101,8 @@ export default function Home({ navigation }) {
                   user: item.username,
                   rating: item.rating,
                   currentUser: user,
-                  onRatingDeleted: removeRating
+                  onRatingDeleted: removeRating,
+                  onRatingUpdated: refreshRatings,
                 })}
               >
                 <View style={{ flexDirection: 'row', justifyContent: "flex-start", alignItems: "center" }}>

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Pressable, Alert, StyleSheet } from "react-native";
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'; // Make sure you import FontAwesomeIcon
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'; // Add this import
 
 export default function UpdateRating({ navigation, route }) {
-
-  const { user, id, song: initialSong, artist: initialArtist, rating: initialRating, currentUser } = route.params;
+  const { user, id, song: initialSong, artist: initialArtist, rating: initialRating, currentUser, onRatingUpdated } = route.params;
 
   const [updatedArtist, setUpdatedArtist] = useState(initialArtist);
   const [updatedSong, setUpdatedSong] = useState(initialSong);
@@ -26,7 +23,6 @@ export default function UpdateRating({ navigation, route }) {
       return;
     }
 
-    // Make API call to update rating
     axios.put(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
       username: user,
       artist: updatedArtist,
@@ -35,15 +31,17 @@ export default function UpdateRating({ navigation, route }) {
     })
     .then(response => {
       Alert.alert("Success", "Rating updated successfully");
+      onRatingUpdated();
       // Navigate back to the Home screen
-      navigation.navigate("Home", { refresh: true });
+      navigation.navigate("Home");
     })
     .catch(error => {
-      //console.error('API call error:', error);
+      console.error('API call error:', error);
+
       if (error.response && error.response.data && error.response.data.error) {
-        Alert.alert(error.response.data.error);
+        Alert.alert("Error", error.response.data.error);
       } else {
-        Alert.alert('An error occurred');
+        Alert.alert("Error", "An error occurred");
       }
     });
   };
