@@ -64,6 +64,7 @@ export default function AddRating({ navigation, route }) {
  return (
    // Frontend view for add rating component
    <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
+      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Hello, " + user + "!"}</Text>
      <View
        style={{
          flex: 1,
@@ -72,7 +73,6 @@ export default function AddRating({ navigation, route }) {
        }}
      >
        <View style={{alignItems:'flex-end'}}>
-       <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Hello, " + user + "!"}</Text>
          <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
            <Text style={styles.buttonText}>Home</Text>
          </Pressable>

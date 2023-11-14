@@ -52,7 +52,7 @@ export default function UpdateRating({ navigation, route }) {
  return (
    // Frontend view for update rating component
    <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
-       <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Welcome, " + user + "!"}</Text>
+       <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Hello, " + user + "!"}</Text>
      <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop: 0 }}>
        Update Rating
      </Text>
