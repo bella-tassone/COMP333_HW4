@@ -3,8 +3,8 @@ import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import axios from 'axios';
 
 export default function AddRating({ navigation, route }) {
-  // Use the 'route' parameter to get the 'user' prop
   const user = route.params.user;
+  const onRatingAdded = route.params.onRatingAdded || (() => {});
 
   const [artist, setArtist] = useState("");
   const [song, setSong] = useState("");
@@ -16,26 +16,24 @@ export default function AddRating({ navigation, route }) {
       return;
     }
 
-    // Make API call to create rating
     axios.post('http://172.21.219.9/index.php/rating/create', {
       username: user,
       artist,
       song,
       rating: parseInt(rating)
     })
-    .then(response => {
-      Alert.alert("Success", "Rating added successfully");
-      // Navigate back to the Home screen
-      navigation.navigate("Home", { refresh: true });
-    })
-    .catch(error => {
-      Alert.alert("Error", "Failed to add rating");
-      console.error(error);
-    });
+      .then(response => {
+        Alert.alert("Success", "Rating added successfully");
+        onRatingAdded(); // Trigger the callback to update ratings on the Home screen
+        navigation.navigate("Home");
+      })
+      .catch(error => {
+        Alert.alert("Error", "Failed to add rating");
+        console.error(error);
+      });
   };
 
   return (
-    // Frontend view for add rating component
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
       <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop: 0 }}>
         Add Rating
