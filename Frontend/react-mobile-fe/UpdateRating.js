@@ -8,13 +8,13 @@ export default function UpdateRating({ navigation, route }) {
 
   const [updatedArtist, setUpdatedArtist] = useState(initialArtist);
   const [updatedSong, setUpdatedSong] = useState(initialSong);
-  const [rating, setRating] = useState(initialRating.toString());
+  const [rating, setRating] = useState(initialRating);
 
   useEffect(() => {
     // Set initial state when the component mounts
     setUpdatedArtist(initialArtist);
     setUpdatedSong(initialSong);
-    setRating(initialRating.toString());
+    setRating(initialRating);
   }, [initialArtist, initialSong, initialRating]);
 
   const updateRating = () => {

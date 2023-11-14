@@ -83,12 +83,12 @@ const handleUpdateRating = () => {
           {stars(route.params.rating)}
         </View>
         {(route.params.user == route.params.currentUser) ? (
-        <View style={{alignItems:'center', marginTop:30}}>
-          <Pressable style={styles.button} onPress={handleUpdateRating}>
-            <Text style={styles.text}>Update</Text>
+        <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:30}}>
+          <Pressable onPress={handleUpdateRating} style={{paddingHorizontal:15}}>
+            <FontAwesomeIcon icon="fa-solid fa-pen-to-square" color="steelblue" size={30}/>
           </Pressable>
-          <Pressable style={styles.button} onPress={handleDeleteRating}>            
-            <Text style={styles.text}>Delete</Text>
+          <Pressable onPress={handleDeleteRating} style={{paddingHorizontal:15}}>            
+            <FontAwesomeIcon icon="fa-solid fa-trash" color="steelblue" size={30}/>
           </Pressable>
         </View>
         ) : null}
