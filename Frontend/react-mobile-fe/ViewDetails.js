@@ -6,11 +6,10 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function ViewDetails({navigation, route}) {
-
   const [isLoading, setLoading] = useState(true);
   const [rating, setRating] = useState([]);
-  const [user, setUser] = useState('');
-
+  const user = route.params.user;
+  
   useEffect(() => {
 
     axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
@@ -48,6 +47,7 @@ const handleUpdateRating = () => {
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop:40  }}>
+      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Welcome, " + user + "!"}</Text>
       <View
         style={{
           flex: 1,

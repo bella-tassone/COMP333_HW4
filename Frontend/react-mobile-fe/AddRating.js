@@ -35,6 +35,7 @@ export default function AddRating({ navigation, route }) {
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
+        <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Welcome, " + user + "!"}</Text>
       <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop: 0 }}>
         Add Rating
       </Text>
