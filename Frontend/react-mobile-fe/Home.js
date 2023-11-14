@@ -18,6 +18,7 @@ export default function Home({ navigation, route }) {
   const refreshRatings = () => {
     axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
       .then((response) => {
+
         setRatings(response.data);
         setLoading(false);
       })
@@ -76,6 +77,7 @@ export default function Home({ navigation, route }) {
             </View>
           )}
           <View style={{ flex: 0.3, flexDirection: 'row', justifyContent: 'center', marginTop: 20, alignItems: 'center' }}>
+
             <TextInput
               style={styles.input}
               onChangeText={(text) => setSearch(text)}
