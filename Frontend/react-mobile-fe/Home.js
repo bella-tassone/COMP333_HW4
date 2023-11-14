@@ -106,12 +106,17 @@ export default function Home({ navigation, route }) {
             )}
           />
           {(user !== 'empty' && user != null) ? (
-            <View style={{ alignItems: 'center' }}>
-              <Pressable style={styles.addRatingButton} onPress={() => navigation.navigate("AddRating", { user, onRatingAdded })}>
-                <Text style={styles.buttonText}>Add Song</Text>
-              </Pressable>
-            </View>
-          ) : null}
+  <View style={{ alignItems: 'center' }}>
+    <Pressable style={styles.addRatingButton}
+        onPress={() => navigation.navigate("AddRating", {
+        user,
+        onRatingAdded: () => refreshRatings(), // Provide a default callback to refresh ratings
+      })}
+    >
+      <Text style={styles.buttonText}>Add Song</Text>
+    </Pressable>
+  </View>
+) : null}
         </View>
       )}
     </View>
