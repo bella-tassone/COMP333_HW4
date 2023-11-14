@@ -12,7 +12,7 @@ export default function ViewDetails({navigation, route}) {
   
   useEffect(() => {
 
-    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
+    axios.get(`http://172.21.44.203/index.php/rating/get?limit=100`)
 
     .then((response) => {
         setRating(response.data);
@@ -47,7 +47,7 @@ const handleUpdateRating = () => {
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop:40  }}>
-      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Welcome, " + user + "!"}</Text>
+      <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Hello, " + user + "!"}</Text>
       <View
         style={{
           flex: 1,
@@ -83,12 +83,12 @@ const handleUpdateRating = () => {
           {stars(route.params.rating)}
         </View>
         {(route.params.user == route.params.currentUser) ? (
-        <View style={{alignItems:'center', marginTop:30}}>
-          <Pressable style={styles.button} onPress={handleUpdateRating}>
-            <Text style={styles.text}>Update</Text>
+        <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:30}}>
+          <Pressable onPress={handleUpdateRating} style={{paddingHorizontal:15}}>
+            <FontAwesomeIcon icon="fa-solid fa-pen-to-square" color="steelblue" size={30}/>
           </Pressable>
-          <Pressable style={styles.button} onPress={handleDeleteRating}>            
-            <Text style={styles.text}>Delete</Text>
+          <Pressable onPress={handleDeleteRating} style={{paddingHorizontal:15}}>            
+            <FontAwesomeIcon icon="fa-solid fa-trash" color="steelblue" size={30}/>
           </Pressable>
         </View>
         ) : null}
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 15,
     paddingHorizontal: 50,
-    borderRadius: 4,
+    borderRadius: 10,
     elevation: 3,
     backgroundColor: 'steelblue',
     marginVertical:7,

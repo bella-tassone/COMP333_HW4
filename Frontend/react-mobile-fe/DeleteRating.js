@@ -8,7 +8,7 @@ export default function DeleteRating({ navigation, route }) {
 
   useEffect(() => {
     // Make API call to delete the rating
-    axios.delete(`http://172.21.219.9/index.php/rating/delete?id=${idToDelete}`, {
+    axios.delete(`http://172.21.44.203/index.php/rating/delete?id=${idToDelete}`, {
       data: { username: user }
     })
     .then(response => {
