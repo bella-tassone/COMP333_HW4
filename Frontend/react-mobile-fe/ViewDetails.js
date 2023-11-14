@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 export default function ViewDetails({navigation, route}) {
   const [isLoading, setLoading] = useState(true);
   const [rating, setRating] = useState([]);
-  const user = route.params.user;
+  const user = route.params.currentUser;
   
   useEffect(() => {
 
