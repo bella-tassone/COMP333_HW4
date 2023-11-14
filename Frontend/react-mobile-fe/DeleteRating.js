@@ -6,8 +6,11 @@ export default function DeleteRating({ navigation, route }) {
   const idToDelete = route.params.id;
   const user = route.params.user;
 
+  // handles deletion of rating, return user to home page
   useEffect(() => {
-    axios.delete(`http://172.21.219.9/index.php/rating/delete?id=${idToDelete}`, {
+    
+    // IMPORTANT!!! Replace IP address below with your own (xxx.xx.xx.xxx)
+    axios.delete(`http://172.21.44.203/index.php/rating/delete?id=${idToDelete}`, {
       data: { username: user }
     })
     .then(response => {

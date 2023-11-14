@@ -7,10 +7,11 @@ export default function UserDetails({navigation, route}) {
   const [isLoading, setLoading] = useState(true);
   const [ratings, setRatings] = useState([]);
 
-  
+  // returns ratings list for a given user
   useEffect(() => {
 
-    axios.get(`http://172.21.219.9/index.php/rating/getUserRatings?user=${route.params.user}`)
+    // IMPORTANT!!! Replace IP address below with your own (xxx.xx.xx.xxx)
+    axios.get(`http://172.21.44.203/index.php/rating/getUserRatings?user=${route.params.user}`)
 
     .then((response) => {
         setRatings(response.data);
@@ -19,6 +20,7 @@ export default function UserDetails({navigation, route}) {
     .catch(err => console.log(err));
   }, []);
 
+  // if user hits home button
   const onSubmit = () => {
     setLoading(true);
     navigation.navigate("Home");
@@ -26,8 +28,9 @@ export default function UserDetails({navigation, route}) {
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop:40  }}>
+      {(route.params.currentUser!='empty' && route.params.currentUser!=null) ? (
       <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Username: " + route.params.currentUser}</Text>
-      {/* As long as isLoading is true, show "Loading ..." */}
+      ): null}
       {isLoading ? (
         <Text>Loading...</Text>
       ) : (

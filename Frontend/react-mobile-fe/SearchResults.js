@@ -7,9 +7,11 @@ export default function SearchResults({navigation, route}) {
   const [isLoading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   
+  // processes request, returns list of users who match search query
   useEffect(() => {
 
-    axios.get(`http://172.21.219.9/index.php/user/get?search=${route.params.search}`)
+    // IMPORTANT!!! Replace IP address below with your own (xxx.xx.xx.xxx)
+    axios.get(`http://172.21.44.203/index.php/user/get?search=${route.params.search}`)
 
     .then((response) => {
         setUsers(response.data);
@@ -18,6 +20,7 @@ export default function SearchResults({navigation, route}) {
     .catch(err => console.log(err));
   }, []);
 
+  // if user selects home button
   const onSubmit = () => {
     setLoading(true);
     navigation.navigate("Home");
@@ -25,8 +28,9 @@ export default function SearchResults({navigation, route}) {
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop:40  }}>
+      {(route.params.currentUser!='empty' && route.params.currentUser!=null) ? (
       <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Username: " + route.params.currentUser}</Text>
-
+      ): null}
       {/* As long as isLoading is true, show "Loading ..." */}
       {isLoading ? (
         <Text>Loading...</Text>

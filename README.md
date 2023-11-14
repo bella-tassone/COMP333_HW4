@@ -85,23 +85,25 @@ For brevity, we will only go over files that have been actively worked on.
 - `package-lock.json`
 - `babel.config.js`
 - `app.json`
-
-#### node_modules
-
-#### assets
-
+- `node_modules` (folder)
+- `assets` (folder)
 - `App.js`: Main component of app, handles page navigation set-up.
 - `Home.js`: Home page logic and API integration. From here, users can login, logout, view the total ratings list, and view individual ratings. If logged in, users can also add ratings from this page.
+- `ViewDetails.js`: Logic for viewing an individual rating. If it's the user's own rating, they can also update and/or delete the rating from this page.
+- `AddRating.js`: Logic and API integration for adding a rating onto the Home page
+- `UpdateRating.js`: Logic and API integration for changing a rating on Home page (only rating itself can be changed, and must be user's own rating).
+- `DeleteRating.js`: Logic and API integration for deleting a rating from Home page (must be user's own rating).
 - `Login.js`: Login form component and API integration for user login
 - `LogOut.js`: Simple form that handles user log out.
 - `Registration.js`: Registration form component and API integration for user login
 - `SearchResults.js`: Logic and API integration for displaying results from user filter search on home page.
 - `UserDetails.js`: Logic and API integration for displaying any given user's ratings list.
-- `ViewDetails.js`: Logic for viewing an individual rating. If it's the user's own rating, they can also update and/or delete the rating from this page.
 
 #### Additional Feature
 
-- `User Filter`: We have implemented a user filter on the Home page. Upon entering a string in the search bar, a list of all users in the database that match will be shown. For instance, if `b` is entered in the search bar, then upon submission both `bella` and `brandon` would be shown as results. However, if `be` is entered, then only `bella` would show as a result. Click on any user given in the search results to see their personal ratings list.
+- `User Filter`: We have implemented a user filter on the Home page. Upon entering a string in the search bar, a list of all users in the database that match will be shown. For instance, if `b` is entered in the search bar, then upon submission both `bella` and `brandon` could be shown as results. However, if `be` is entered, then only `bella` would show as a result. Click on any user given in the search results to see their personal ratings list.
 
 Developers🧑‍🔬:
 Bella Tassone and Nate Levinson
+
+**NOTE**: In our updating ratings page, users are only allowed to change the rating of any given entry (not song or artist). This is what made most sense to us, as a user should never need to edit a song and artist, considering they already have the ability to add new entries and delete current ones. We talked to Sebastian about this and got the OK to go ahead with it!

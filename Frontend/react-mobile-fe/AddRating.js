@@ -14,6 +14,7 @@ export default function AddRating({ navigation, route }) {
   const [song, setSong] = useState("");
   const [rating, setRating] = useState(0);
 
+  // function runs when user submits request
   const addRating = () => {
     if (!artist || !song || !rating) {
       Alert.alert("Error", "All fields must be filled!");
@@ -21,7 +22,8 @@ export default function AddRating({ navigation, route }) {
     }
 
     // Make API call to create rating
-    axios.post('http:/172.21.219.9/index.php/rating/create', {
+    // IMPORTANT!!! Replace IP address below with your own (xxx.xx.xx.xxx)
+    axios.post('http:/172.21.44.203/index.php/rating/create', {
       username: user,
       artist: artist,
       song: song,
@@ -43,11 +45,13 @@ export default function AddRating({ navigation, route }) {
     });
   };
 
+  // sets rating and changes star UI based on star amount that user presses
   const changeStars = (index) => {
     setRating(index+1);
     stars(rating);
   };
 
+  // renders stars in place of numerical rating
   const stars = (rating) => {
     const max = 5;
     const stars = [];
