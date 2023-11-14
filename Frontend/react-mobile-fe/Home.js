@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable, TextInput } from "react-native";
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route }) {
   const [isLoading, setLoading] = useState(true);
   const [ratings, setRatings] = useState([]);
   const [search, setSearch] = useState("");
@@ -12,7 +13,22 @@ export default function Home({ navigation }) {
 
   const refreshUser = () => {
     setUserChange(!userChange);
-  }
+  };
+
+  const refreshRatings = () => {
+    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
+      .then((response) => {
+        setRatings(response.data);
+        setLoading(false);
+      })
+      .catch(err => console.log(err));
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      refreshRatings();
+    }, [userChange])
+  );
 
   useEffect(() => {
     AsyncStorage.getItem('username')
@@ -24,29 +40,12 @@ export default function Home({ navigation }) {
       })
       .catch((e) => {
         console.error('API call error:', e);
-      })
-
-    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
-      .then((response) => {
-        setRatings(response.data);
-        setLoading(false);
-      })
-      .catch(err => console.log(err));
+      });
   }, [userChange]);
 
   const clearAndSubmit = () => {
     setSearch("");
     navigation.navigate("Search Results", { search: search });
-  };
-
-  const onRatingAdded = async () => {
-    try {
-      const response = await axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`);
-      setRatings(response.data);
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   return (
@@ -108,16 +107,16 @@ export default function Home({ navigation }) {
           />
           {(user !== 'empty' && user != null) ? (
             <View style={{ alignItems: 'center' }}>
-            <Pressable style={styles.addRatingButton} onPress={() => navigation.navigate("AddRating", { user, onRatingAdded })}>
-              <Text style={styles.buttonText}>Add Song</Text>
-            </Pressable>
-          </View>
+              <Pressable style={styles.addRatingButton} onPress={() => navigation.navigate("AddRating", { user, onRatingAdded })}>
+                <Text style={styles.buttonText}>Add Song</Text>
+              </Pressable>
+            </View>
           ) : null}
         </View>
       )}
     </View>
   );
-};
+}
 
 
 const styles = StyleSheet.create({
