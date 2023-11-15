@@ -59,7 +59,7 @@ export default function Home({ navigation }) {
   // Clear search bar and submit request
   const clearAndSubmit = () => {
     setSearch("");
-    navigation.navigate("Search Results", {search: search, currentUser: user});
+    navigation.navigate("Search Results", {search: search, currentUser: user, onRatingDeleted: removeRating, onRatingUpdated: refreshRatings});
   }
 
   // turn ratings into stars

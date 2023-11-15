@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable } from "react-native";
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function UserDetails({navigation, route}) {
 
@@ -25,6 +26,22 @@ export default function UserDetails({navigation, route}) {
     setLoading(true);
     navigation.navigate("Home");
   }
+
+    // turn ratings into stars
+    const stars = (rating) => {
+      const max = 5;
+      const stars = [];
+  
+      for (let i = 0; i < max; i++) {
+        if (i < rating) {
+          stars[i] = <FontAwesomeIcon key={i} icon="fa-solid fa-star" color="gold" size={22} />;
+        }
+        else {
+          stars[i] = <FontAwesomeIcon key={i} icon="fa-regular fa-star" color="gold" size={22} />;
+        }
+      }
+      return <Text>{stars}</Text>;
+    };
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop:40  }}>
@@ -57,11 +74,14 @@ export default function UserDetails({navigation, route}) {
               <TouchableOpacity 
                     key={item.id}
                     style={styles.button} 
-                    onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating})}
+                    onPress={() => navigation.navigate("Details", {id: item.id, song: item.song, artist: item.artist, user:item.username, rating:item.rating, currentUser:route.params.currentUser, onRatingDeleted: route.params.onRatingDeleted, onRatingUpdated: route.params.onRatingUpdated})}
                 >
                 <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
                   <Text style={styles.songText}>{item.song}</Text>
                   <Text style={styles.artistText}>{"  by " + item.artist}</Text>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: "center", marginTop:10 }}>
+                  <Text>{stars(item.rating)}</Text>
                 </View>
               </TouchableOpacity>
             )}

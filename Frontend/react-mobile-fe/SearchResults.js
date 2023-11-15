@@ -65,7 +65,7 @@ export default function SearchResults({navigation, route}) {
                 <TouchableOpacity 
                         key={item.username}
                         style={styles.button} 
-                        onPress={() => navigation.navigate("User Details", {user: item.username, currentUser:route.params.currentUser})}
+                        onPress={() => navigation.navigate("User Details", {user: item.username, currentUser:route.params.currentUser, onRatingDeleted: route.params.onRatingDeleted, onRatingUpdated: route.params.onRatingUpdated})}
                     >
                     <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
                     <Text style={styles.userText}>{'@' + item.username}</Text>
