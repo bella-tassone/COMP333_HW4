@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable, TextInput, LogBox } from "react-native";
+import { FlatList, Text, View, TouchableOpacity, StyleSheet, Alert, Pressable, TextInput, LogBox, ScrollView } from "react-native";
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function Home({ navigation }) {
+
+  // Code to remove warning (doesn't affect functionality)
+  // Source: https://stackoverflow.com/questions/66310505/non-serializable-values-were-found-in-the-navigation-state-when-passing-a-functi
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
   ]);
@@ -15,18 +19,22 @@ export default function Home({ navigation }) {
   const [userChange, setUserChange] = useState(false);
   const [ratingsChange, setRatingsChange] = useState(false);
 
+  // function to refresh ratings list when rating is deleted
   const removeRating = (id) => {
     setRatings((prevRatings) => prevRatings.filter((rating) => rating.id !== id));
   };
 
+  // function to refresh page when user logs in/out (update user variable)
   const refreshUser = () => {
     setUserChange(!userChange);
   }
 
+  // function to refresh ratings list when rating is added/updated
   const refreshRatings = () => {
     setRatingsChange(!ratingsChange);
   }
 
+  // Get username from storage, fetch ratings list
   useEffect(() => {
     AsyncStorage.getItem('username')
     .then((value) => {
@@ -39,7 +47,8 @@ export default function Home({ navigation }) {
       console.error('API call error:', e);
     })
 
-    axios.get(`http://172.21.219.9/index.php/rating/get?limit=100`)
+    // IMPORTANT!!! Replace IP address below with your own (xxx.xx.xx.xxx)
+    axios.get(`http://172.21.44.203/index.php/rating/get?limit=100`)
     .then((response) => {
         setRatings(response.data);
         setLoading(false);
@@ -47,10 +56,27 @@ export default function Home({ navigation }) {
     .catch(err => console.log(err));
   }, [userChange, ratingsChange]);
 
+  // Clear search bar and submit request
   const clearAndSubmit = () => {
     setSearch("");
-    navigation.navigate("Search Results", {search: search, currentUser: user});
+    navigation.navigate("Search Results", {search: search, currentUser: user, onRatingDeleted: removeRating, onRatingUpdated: refreshRatings});
   }
+
+  // turn ratings into stars
+  const stars = (rating) => {
+    const max = 5;
+    const stars = [];
+
+    for (let i = 0; i < max; i++) {
+      if (i < rating) {
+        stars[i] = <FontAwesomeIcon key={i} icon="fa-solid fa-star" color="gold" size={22} />;
+      }
+      else {
+        stars[i] = <FontAwesomeIcon key={i} icon="fa-regular fa-star" color="gold" size={22} />;
+      }
+    }
+    return <Text>{stars}</Text>;
+  };
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
@@ -84,7 +110,7 @@ export default function Home({ navigation }) {
               <Text style={styles.buttonText}>Submit</Text>
             </Pressable>
           </View>
-          <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop: 0 }}>
+          <Text style={{ fontSize: 30, color: "grey", textAlign: "center", marginTop: 15 }}>
             Ratings List
           </Text>
           <FlatList
@@ -105,10 +131,14 @@ export default function Home({ navigation }) {
                   onRatingUpdated: refreshRatings,
                 })}
               >
-                <View style={{ flexDirection: 'row', justifyContent: "flex-start", alignItems: "center" }}>
-                  <Text style={styles.songText}>{item.song}</Text>
-                  <Text style={styles.artistText}>{"  by " + item.artist}</Text>
-                </View>
+              <View style={{ flexDirection: 'row', justifyContent: "flex-start", alignItems: "center" }}>
+                <Text style={styles.songText}>{item.song}</Text>
+                <Text style={styles.artistText}>{"  by " + item.artist}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center", marginTop:10 }}>
+                <Text>{stars(item.rating)}</Text>
+                <Text style={styles.artistText}>{"@" + item.username}</Text>
+              </View>
               </TouchableOpacity>
             )}
           />

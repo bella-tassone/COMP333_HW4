@@ -17,13 +17,15 @@ export default function UpdateRating({ navigation, route }) {
     setRating(initialRating);
   }, [initialArtist, initialSong, initialRating]);
 
+  // handles update request upon submission
   const updateRating = () => {
     if (!updatedArtist || !updatedSong || !rating) {
       Alert.alert("Error", "All fields must be filled!");
       return;
     }
 
-    axios.put(`http://172.21.219.9/index.php/rating/update?id=${id}`, {
+    // IMPORTANT!!! Replace IP address below with your own (xxx.xx.xx.xxx)
+    axios.put(`http://172.21.44.203/index.php/rating/update?id=${id}`, {
       username: user,
       artist: updatedArtist,
       song: updatedSong,
@@ -46,11 +48,13 @@ export default function UpdateRating({ navigation, route }) {
     });
   };
 
+  // sets rating and changes star UI based on star amount that user presses
   const changeStars = (index) => {
     setRating(index+1);
     stars(rating);
   };
 
+  // renders stars in place of numerical rating
   const stars = (rating) => {
     const max = 5;
     const stars = [];

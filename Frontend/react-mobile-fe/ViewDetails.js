@@ -8,8 +8,11 @@ export default function ViewDetails({ navigation, route }) {
   const [rating, setRating] = useState([]);
   const user = route.params.currentUser;
 
+  // fetches rating details
   useEffect(() => {
-    axios.get(`http://172.21.219.93/index.php/rating/get?limit=100`)
+
+    // IMPORTANT!!! Replace IP address below with your own (xxx.xx.xx.xxx)
+    axios.get(`http://172.21.44.2033/index.php/rating/get?limit=100`)
     .then((response) => {
         setRating(response.data);
         setLoading(false);
@@ -17,6 +20,7 @@ export default function ViewDetails({ navigation, route }) {
     .catch(err => console.log(err));
   }, []);
 
+  // renders stars in place of numerical rating
   const stars = (rating) => {
     const max = 5;
     const stars = [];
@@ -32,10 +36,12 @@ export default function ViewDetails({ navigation, route }) {
     return <Text>{stars}</Text>;
   };
 
+  // processes user's request to delete rating
   const handleDeleteRating = () => {
     navigation.navigate("DeleteRating", { id: route.params.id, user: route.params.user, onRatingDeleted: route.params.onRatingDeleted });
   };
 
+  // navigates to update rating page
   const handleUpdateRating = () => {
     const { id, user, song, artist, rating, currentUser, onRatingUpdated } = route.params;
     navigation.navigate("UpdateRating", { id, user, song, artist, rating, currentUser, onRatingUpdated });
@@ -43,7 +49,9 @@ export default function ViewDetails({ navigation, route }) {
 
   return (
     <View style={{ flex: 1, padding: 12, marginTop: 40 }}>
+      {(user!='empty' && user!=null) ? (
       <Text style={{ fontSize: 25, color: "grey", textAlign: "center", marginTop: 0 }}>{"Username: " + user}</Text>
+      ) : null}
       <View style={{ flex: 1, flexDirection: "column", justifyContent: "flex-start" }}>
         <View style={{ alignItems: 'flex-end' }}>
           <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
